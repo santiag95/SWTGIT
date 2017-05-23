@@ -42,27 +42,18 @@ public class Triangle implements IPrimitive {
 		int p1y = pointA.y;
 		int p2y = pointB.y;
 		int p3y = pointC.y;
-		
-		
-		
-		float alpha = ((p2y - p3y)*(p.x - p3x) + (p3x - p2x)*(p.y - p3y)) /
-		        ((p2y - p3y)*(p1x - p3x) + (p3x - p2x)*(p1y - p3y));
-		float beta = ((p3y - p1y)*(p.x - p3x) + (p1x - p3x)*(p.y - p3y)) /
-		       ((p2y - p3y)*(p1x - p3x) + (p3x - p2x)*(p1y - p3y));
+		float alpha = ((p2y - p3y) * (p.x - p3x) + (p3x - p2x) * (p.y - p3y)) 
+				/ ((p2y - p3y) * (p1x - p3x) + (p3x - p2x) * (p1y - p3y));
+		float beta = ((p3y - p1y) * (p.x - p3x) + (p1x - p3x) * (p.y - p3y)) 
+				/ ((p2y - p3y) * (p1x - p3x) + (p3x - p2x) * (p1y - p3y));
 		float gamma = 1.0f - alpha - beta;
-		
-		if ((alpha < 0) && (gamma < 0) && (beta < 0) )
-			return true;
-		
-		return false;
+		return (alpha < 0) && (gamma < 0) && (beta < 0);
 	}
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		/*
-		 * YOUR SOLUTION HERE
-		 */
-		return null;
+		BoundingBox b = new BoundingBox(pointA, pointC);
+		return b;
 	}
 
 	@Override
