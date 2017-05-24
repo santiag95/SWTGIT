@@ -10,10 +10,21 @@ import java.awt.Point;
  * @version 1.0
  */
 public class Triangle implements IPrimitive {
-	
+	/**
+	 * The Color of the triangle.
+	 */
 	Color color = null;
+	/**
+	 * The first point of the triangle.
+	 */
 	Point pointA = null;
+	/**
+	 * The second point of the triangle.
+	 */
 	Point pointB = null;
+	/**
+	 * The third point of the triangle.
+	 */
 	Point pointC = null;
 
 
@@ -34,7 +45,12 @@ public class Triangle implements IPrimitive {
 		
 	}
 
-	@Override
+	/**
+	 * Proofs if the given point p in the parameter is inside the primitive figure.
+	 * @param p the point thats going to be tested
+	 * @return true if the point p is inside.
+	 *         false if the point p is outside
+	 */
 	public boolean isInsidePrimitive(Point p) {
 		int p1x = pointA.x;
 		int p2x = pointB.x;
@@ -50,19 +66,28 @@ public class Triangle implements IPrimitive {
 		return (alpha < 0) && (gamma < 0) && (beta < 0);
 	}
 
-	@Override
+	/**
+	 * Gives the Bounding box generated based on the triangle coordinates.
+	 * @return BoundingBox the boundingBox where the primitive figure can be contained.
+	 */
 	public BoundingBox getBoundingBox() {
 		BoundingBox b = new BoundingBox(pointA, pointC);
 		return b;
 	}
 
-	@Override
+	/**
+	 * Gives the color contained in the triangle.
+	 * @return Color the color of the triangle.
+	 */
 	public Color getColor() {
 		return color;
 		
 	}
 
-	@Override
+	/**
+	 * Sets a given color to the triangle.
+	 * @param c the color to be set in the triangle.
+	 */
 	public void setColor(Color c) {
 		color = c;
 	}
