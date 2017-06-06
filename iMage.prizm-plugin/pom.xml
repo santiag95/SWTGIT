@@ -24,15 +24,11 @@
     </dependency>
     <dependency>
     	<groupId>swt1.ub3.a1</groupId>
-    	<artifactId>1854693</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    	<type>pom</type>
-    </dependency>
-    <dependency>
-    	<groupId>swt1.ub3.a1</groupId>
     	<artifactId>jmjrst.main</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
     	<type>pom</type>
     </dependency>
   </dependencies>
+ 
+  <packaging>pom</packaging>
 </project>

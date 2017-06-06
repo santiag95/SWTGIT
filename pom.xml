@@ -20,6 +20,7 @@
 	<modules>
 		<module>jmjrst.main</module>
 		<!-- add new modules here -->
-    <module>iMage.prizm-plugin</module>
-  </modules>
+    
+		<module>iMage.prizm-plugin</module>
+	</modules>
 </project>
