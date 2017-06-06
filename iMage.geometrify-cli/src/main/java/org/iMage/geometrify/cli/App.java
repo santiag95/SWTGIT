@@ -1,20 +1,26 @@
 package org.iMage.geometrify.cli;
 
+<<<<<<< HEAD
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+=======
+>>>>>>> d3e926f0ce8bc5aa499085a74d34ed4e5a7cdaa7
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+<<<<<<< HEAD
 import org.iMage.geometrify.IPrimitiveFilter;
 import org.iMage.geometrify.RandomPointGenerator;
 import org.iMage.geometrify.TrianglePictureFilter;
+=======
+>>>>>>> d3e926f0ce8bc5aa499085a74d34ed4e5a7cdaa7
 
 /**
  * This class parses all command line parameters and applies the primitive
@@ -50,6 +56,7 @@ public class App {
 			System.err.println("Wrong command line arguments given: " + exception.getMessage());
 		}
 
+<<<<<<< HEAD
 		BufferedImage image = null;
 		try {
 			File srcFile = new File(cmd.getOptionValue(CMD_OPTION_INPUT_FILE));
@@ -72,6 +79,11 @@ public class App {
 			e.printStackTrace();
 			System.exit(1);
 		}
+=======
+		/*
+		 * YOUR SOLUTION HERE
+		 */
+>>>>>>> d3e926f0ce8bc5aa499085a74d34ed4e5a7cdaa7
 
 		System.exit(0);
 	}

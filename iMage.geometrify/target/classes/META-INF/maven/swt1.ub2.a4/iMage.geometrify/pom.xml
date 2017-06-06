@@ -5,24 +5,13 @@
     <artifactId>iMage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-<<<<<<< HEAD
-  <artifactId>iMage.geometrify</artifactId>
-=======
   <groupId>swt1.ub2.a4</groupId>
-  <artifactId>1854693</artifactId>
->>>>>>> d3e926f0ce8bc5aa499085a74d34ed4e5a7cdaa7
+  <artifactId>iMage.geometrify</artifactId>
   <dependencies>
   	<dependency>
   		<groupId>swt1</groupId>
   		<artifactId>iMage.geometrify-base</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
-<<<<<<< HEAD
-  	<dependency>
-  		<groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-  	</dependency>
-=======
->>>>>>> d3e926f0ce8bc5aa499085a74d34ed4e5a7cdaa7
   </dependencies>
 </project>
