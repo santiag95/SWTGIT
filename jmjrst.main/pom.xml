@@ -6,7 +6,7 @@
 		<artifactId>iMage</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>1854693</artifactId>
+	<artifactId>jmjrst.main</artifactId>
 
 	<dependencies>
 		<dependency>

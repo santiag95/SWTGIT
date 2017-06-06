@@ -1,4 +1,10 @@
 <changelog><commit>
+					<time>1496776441</time>
+					<sha1>d48a19a0d949e3bba7d4adc107188be2a3abbd99</sha1>
+					<author>santiag95</author>
+					<branches>refs/heads/master</branches>
+					<msg>Corrected the pom.xml to pom packaging</msg>
+				</commit><commit>
 					<time>1496774664</time>
 					<sha1>def2bb21f0996cb6618fbdc4c7a00090881c13d1</sha1>
 					<author>santiag95</author>
