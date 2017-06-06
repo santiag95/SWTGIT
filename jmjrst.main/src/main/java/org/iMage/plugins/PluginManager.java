@@ -31,6 +31,11 @@ public final class PluginManager {
 		
 		List<JmjrstPlugin> plugs = new ArrayList<>();
 		
-		return new ArrayList<JmjrstPlugin>();
+		for (final JmjrstPlugin pl : sL) {
+			plugs.add(pl);
+		}
+		
+		
+		return plugs;
 	}
 }
