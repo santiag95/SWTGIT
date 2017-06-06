@@ -83,6 +83,6 @@ public abstract class JmjrstPlugin implements Comparable<JmjrstPlugin> {
 	@Override
 	public int compareTo(JmjrstPlugin otherPlugin) {
 		// TODO: implement me
-		return 0;
+		return getPriority().compareTo(otherPlugin.getPriority());
 	}
 }

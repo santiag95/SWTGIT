@@ -35,6 +35,7 @@ public final class PluginManager {
 			plugs.add(pl);
 		}
 		
+		Collections.sort(plugs);
 		
 		return plugs;
 	}
