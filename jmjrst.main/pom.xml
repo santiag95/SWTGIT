@@ -44,4 +44,5 @@
 		</plugins>
 	</build>
 	<groupId>swt1.ub3.a1</groupId>
+	<packaging>pom</packaging>
 </project>
