@@ -6,7 +6,6 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import org.iMage.plugins.PluginPriority;
 
 public class HalloWeltPlugin extends JmjrstPlugin {
 	private Main jmjrstSWT;
@@ -43,6 +42,7 @@ public class HalloWeltPlugin extends JmjrstPlugin {
 	}
 	
 	public void configure() {
-		JOptionPane.showMessageDialog(jmjrstSWT, getName(), this.priority.name(), JOptionPane.INFORMATION_MESSAGE );
+		JOptionPane.showMessageDialog(jmjrstSWT, getName(), this.priority.name(),
+				"Ueberwache Nutzer " + System.getProperty("user.name"), JOptionPane.INFORMATION_MESSAGE);
 	}
 }
