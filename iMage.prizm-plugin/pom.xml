@@ -7,8 +7,8 @@
     <artifactId>iMage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>swt1</groupId>
-  <artifactId>iMage.prizm-plugin</artifactId>
+  <groupId>swt1.ub3.a2</groupId>
+  <artifactId>1854693</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>iMage.prizm-plugin</name>
   <url>http://maven.apache.org</url>
@@ -23,12 +23,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-    	<groupId>swt1.ub3.a1</groupId>
-    	<artifactId>jmjrst.main</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
+    	<groupId>edu.kit.ipd.swt1</groupId>
+    	<artifactId>jmjrst-plugin-helper</artifactId>
+    	<version> 0.0.2-SNAPSHOT</version>
     	<type>pom</type>
     </dependency>
   </dependencies>
  
-  <packaging>pom</packaging>
 </project>
