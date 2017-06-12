@@ -26,17 +26,15 @@ public final class PluginManager {
 	 *         ascending order.
 	 */
 	public static List<JmjrstPlugin> getPlugins() {
-		// TODO: implement me
-		ServiceLoader<JmjrstPlugin> sL = ServiceLoader.load(JmjrstPlugin.class);
-		
-		List<JmjrstPlugin> plugs = new ArrayList<>();
-		
-		for (final JmjrstPlugin pl : sL) {
-			plugs.add(pl);
+		ServiceLoader<JmjrstPlugin> serviceLoader = ServiceLoader.load(JmjrstPlugin.class);
+
+		List<JmjrstPlugin> p = new ArrayList<>();
+		for (final JmjrstPlugin plugin : serviceLoader) {
+			p.add(plugin);
 		}
-		
-		Collections.sort(plugs);
-		
-		return plugs;
+
+		// Sortieren mit dem Comparator aus JmjrstPlugin
+		Collections.sort(p);
+		return p;
 	}
 }

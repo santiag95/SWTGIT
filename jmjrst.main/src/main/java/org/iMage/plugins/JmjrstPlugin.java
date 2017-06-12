@@ -12,17 +12,17 @@ public abstract class JmjrstPlugin implements Comparable<JmjrstPlugin> {
 	protected PluginPriority priority;
 
 	/**
-	 * Sets the plug-in's priority
-	 * 
-	 */
-	public abstract void setPriority(PluginPriority priority);
-
-	/**
 	 * Returns the plug-in's priority
 	 * 
 	 * @return the plug-in's priority
 	 */
 	public abstract PluginPriority getPriority();
+	
+	/**
+	 * Sets the plug-in's priority
+	 * 
+	 */
+	public abstract void setPriority(PluginPriority priority);
 
 	/**
 	 * Returns the text displayed in the menu label for this plug-in
@@ -68,9 +68,9 @@ public abstract class JmjrstPlugin implements Comparable<JmjrstPlugin> {
 	 * Implement comparator functionality - plug-ins are compared on basis of
 	 * their priority.
 	 * 
-	 * Compares this plug-in with the specified plug-in for order. Returns a -1
-	 * , zero, or 1 if this plug-in's priority is less than, equal to, or
-	 * greater than the specified plug-in's priority.
+	 * Compares this plug-in with the specified plug-in for order. Returns a -1 ,
+	 * zero, or 1 if this plug-in's priority is less than, equal to, or greater
+	 * than the specified plug-in's priority.
 	 * 
 	 * If any of the priorities is <code>null</code> its plug-in's priority is
 	 * less than the other except for the case that both are <code>null</code>.
@@ -82,7 +82,19 @@ public abstract class JmjrstPlugin implements Comparable<JmjrstPlugin> {
 	 */
 	@Override
 	public int compareTo(JmjrstPlugin otherPlugin) {
-		// TODO: implement me
-		return getPriority().compareTo(otherPlugin.getPriority());
+		if (this.getPriority() == null) {
+			if (otherPlugin.getPriority() == null) {
+				return 0;
+			} else {
+				return -1;
+			}
+
+		} else {
+			if (otherPlugin.getPriority() == null) {
+				return 1;
+			} else {
+				return this.getPriority().compareTo(otherPlugin.getPriority());
+			}
+		}
 	}
 }

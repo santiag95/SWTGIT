@@ -22,5 +22,6 @@
 		<!-- add new modules here -->
     
 		<module>iMage.prizm-plugin</module>
-	</modules>
+    <module>iMage.bundle</module>
+  </modules>
 </project>
