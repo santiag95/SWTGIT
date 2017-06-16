@@ -26,6 +26,7 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
+				<skipTest>${skipTests}</skipTest>
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
@@ -44,5 +45,4 @@
 		</plugins>
 	</build>
 	<groupId>swt1.ub3.a1</groupId>
-	<packaging>pom</packaging>
 </project>

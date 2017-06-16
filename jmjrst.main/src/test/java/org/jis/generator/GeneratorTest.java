@@ -26,6 +26,7 @@ import javax.imageio.stream.ImageOutputStream;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -156,6 +157,7 @@ public class GeneratorTest {
 	/**
 	 * Aufgabe 2 f) Teil 1
 	 */
+	@Ignore
 	@Test
 	public void testRotateImage_Rotate90() {
 		rotatedImageTestResult = generator.rotateImage(testImage,
@@ -176,6 +178,8 @@ public class GeneratorTest {
 	/**
 	 * Aufgabe 2 f) Teil 2
 	 */
+	
+	@Ignore
 	@Test
 	public void testRotateImage_Rotate270() {
 		rotatedImageTestResult = generator.rotateImage(testImage,
@@ -195,6 +199,7 @@ public class GeneratorTest {
 	/**
 	 * Aufgabe 2 g)
 	 */
+	@Ignore
 	@Test
 	public void testRotateImage_Rotate180() {
 		rotatedImageTestResult = generator.rotateImage(testImage,

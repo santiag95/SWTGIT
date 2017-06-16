@@ -107,7 +107,8 @@ public class GeneratorCoverageTest {
         image1.delete();
         image2.delete();
     }
-
+    
+    @Ignore
     @Test
     public void testGenerateImage_ModusDefault() {
         Options.getInstance().setModus(Options.MODUS_DEFAULT);
@@ -160,6 +161,8 @@ public class GeneratorCoverageTest {
         }
     }
 
+    
+    @Ignore
     @Test
     public void testGenerateImage_ModusQuality() {
         Options.getInstance().setModus(Options.MODUS_QUALITY);
@@ -185,6 +188,7 @@ public class GeneratorCoverageTest {
         }
     }
 
+    @Ignore
     @Test
     public void testGenerateImage_Modus123() {
         Options.getInstance().setModus(123);
@@ -297,7 +301,8 @@ public class GeneratorCoverageTest {
             fail(e.getMessage());
         }
     }
-
+    
+    @Ignore
     @Test
     public void testRotateImage_Rotate180() {
         BufferedImage result = generator.rotateImage(testImage,
