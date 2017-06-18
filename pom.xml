@@ -23,6 +23,6 @@
     
 		<module>iMage.prizm-plugin</module>
     <module>iMage.bundle</module>
-    
+    <module>iMage.iLlustrate</module>
   </modules>
 </project>
