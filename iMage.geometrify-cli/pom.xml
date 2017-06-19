@@ -5,10 +5,8 @@
     <artifactId>iMage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-<<<<<<< HEAD
-=======
+
   <groupId>swt1.ub2.a5</groupId>
->>>>>>> d3e926f0ce8bc5aa499085a74d34ed4e5a7cdaa7
   <artifactId>iMage.geometrify-cli</artifactId>
   <dependencies>
   	<dependency>
@@ -16,11 +14,7 @@
   		<artifactId>commons-cli</artifactId>
   	</dependency>
   	<dependency>
-<<<<<<< HEAD
-  		<groupId>swt1</groupId>
-=======
-  		<groupId>swt1.ub2.a4</groupId>
->>>>>>> d3e926f0ce8bc5aa499085a74d34ed4e5a7cdaa7
+		<groupId>swt1.ub2.a4</groupId>
   		<artifactId>iMage.geometrify</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
@@ -39,11 +33,10 @@
   						<classpathPrefix>lib/</classpathPrefix>
   						<classpathLayoutType>repository</classpathLayoutType>
   						<!-- <useUniqueVersion>false</useUniqueVersion> -->
-<<<<<<< HEAD
+
   						<mainClass>org.iMage.primitive.cli.App</mainClass>
-=======
   						<mainClass>org.iMage.geometrify.cli.App</mainClass>
->>>>>>> d3e926f0ce8bc5aa499085a74d34ed4e5a7cdaa7
+
   					</manifest>
   				</archive>
   			</configuration>

@@ -1,7 +1,6 @@
 package org.iMage.geometrify;
 
 import java.awt.Color;
-<<<<<<< HEAD
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
@@ -23,28 +22,11 @@ public class TrianglePictureFilter extends AbstractPrimitivePictureFilter {
 	 * @param pointGenerator
 	 *            The {@link IPointGenerator} to use for generating
 	 *            {@link Triangle} {@link Point}s
-=======
-import java.awt.image.BufferedImage;
-/**
- * The Filter that edits the given photo with the primitive figures.
- *
- * @author Santiago Tafur
- * @version 1.0
- */
-public class TrianglePictureFilter extends AbstractPrimitivePictureFilter {
-	
-	/**
-	 * Constructs the triangle filter based on where the pointGenerator was placed.
-	 *
-	 * @param pointGenerator
-	 *            the generator of the point
->>>>>>> d3e926f0ce8bc5aa499085a74d34ed4e5a7cdaa7
 	 */
 	public TrianglePictureFilter(IPointGenerator pointGenerator) {
 		super(pointGenerator);
 	}
 
-<<<<<<< HEAD
 	/*
 	 * (non-Javadoc)
 	 *
@@ -277,44 +259,5 @@ public class TrianglePictureFilter extends AbstractPrimitivePictureFilter {
 			}
 		}
 		current.getRaster().setPixels(0, 0, width, height, imgPixels);
-=======
-	@Override
-	protected Color calculateColor(BufferedImage image, IPrimitive primitive) {
-		/*
-		 * YOUR SOLUTION HERE
-		 */
-		return null;
-	}
-
-	@Override
-	public BufferedImage apply(BufferedImage image, int numberOfIterations, int numberOfSamples) {
-		/*
-		 * YOUR SOLUTION HERE
-		 */
-		return null;
-	}
-
-	@Override
-	protected IPrimitive generatePrimitive() {
-		/*
-		 * YOUR SOLUTION HERE
-		 */
-		return null;
-	}
-
-	@Override
-	protected int calculateDifference(BufferedImage original, BufferedImage current, IPrimitive primitive) {
-		/*
-		 * YOUR SOLUTION HERE
-		 */
-		return 0;
-	}
-
-	@Override
-	protected void addToImage(BufferedImage image, IPrimitive primitive) {
-		/*
-		 * YOUR SOLUTION HERE
-		 */
->>>>>>> d3e926f0ce8bc5aa499085a74d34ed4e5a7cdaa7
 	}
 }

@@ -20,9 +20,10 @@
 	<modules>
 		<module>jmjrst.main</module>
 		<!-- add new modules here -->
-    
-		<module>iMage.prizm-plugin</module>
+    <module>iMage.prizm-plugin</module>
     <module>iMage.bundle</module>
     <module>iMage.iLlustrate</module>
-  </modules>
+    <module>iMage.geometrify</module>
+    <module>iMage.geometrify-cli</module>
+	</modules>
 </project>

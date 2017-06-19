@@ -23,6 +23,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+		<groupId>swt1.ub2.a4</groupId>
+  		<artifactId>iMage.geometrify</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+    <dependency>
     	<groupId>swt1.ub3.a1</groupId>
     	<artifactId>1854693</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
@@ -31,5 +36,6 @@
     	<groupId>org.kohsuke.metainf-services</groupId>
     	<artifactId>metainf-services</artifactId>
     </dependency>
+    
   </dependencies>
 </project>
