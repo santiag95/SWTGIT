@@ -47,28 +47,28 @@ public class MainGenerator extends JFrame implements ChangeListener, ActionListe
 	ImageIcon shortAfter;
 	
 	private JPanel iterationsPanel;
-	private JLabel iterationStatus = new JLabel("Iterations (20)");
+	private JLabel iterationStatus = new JLabel("Iterations (100)");
 	private final int IT_MIN = 0;
 	private final int IT_MAX = 2000;
-	private final int IT_INIT = 20;
+	private final int IT_INIT = 100;
 	private JSlider slidIteration = new JSlider(JSlider.HORIZONTAL,IT_MIN, IT_MAX, IT_INIT);
-	int valueIterations = 20;
+	int valueIterations = 100;
 	
 	
 	private JPanel sampsPanel;
-	private JLabel samplesStatus = new JLabel("Samples (10)");
+	private JLabel samplesStatus = new JLabel("Samples (30)");
 	private final int SAMP_MIN = 0;
 	private final int SAMP_MAX = 200;
-	private final int SAMP_INIT = 10;
+	private final int SAMP_INIT = 30;
 	private JSlider slidSamps = new JSlider(JSlider.HORIZONTAL,SAMP_MIN, SAMP_MAX, SAMP_INIT);
-	int valueSamps = 10;
+	int valueSamps = 30;
 	
 	
 	private JPanel buttonPanel = new JPanel(new FlowLayout());
 	private JButton loadButton = new JButton("Load");
 	private JButton runButton = new JButton("Run");
 	
-	
+	private File previewFile;
 	
 	private JLabel empty1 = new JLabel("EMPTY");
 	private JLabel empty2 = new JLabel("EMPTY");
@@ -164,7 +164,7 @@ public class MainGenerator extends JFrame implements ChangeListener, ActionListe
 		buttonPanel.add(runButton);
 		
 		loadButton.addActionListener(new ActionListener() {
-		    
+			
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
 				FileNameExtensionFilter filter = 
@@ -180,6 +180,7 @@ public class MainGenerator extends JFrame implements ChangeListener, ActionListe
 					    preview = ImageIO.read(selectedFile); 
 					    shortPreview = new ImageIcon(resize(preview, 150, 150));
 					    empty1.setIcon(shortPreview);
+					    previewFile = selectedFile;
 					} 
 					catch (IOException ex) {
 						JOptionPane.showMessageDialog(null, "Error occured reading the image");
@@ -193,17 +194,16 @@ public class MainGenerator extends JFrame implements ChangeListener, ActionListe
 		runButton.addActionListener(new ActionListener() {
 		    
 			public void actionPerformed(ActionEvent e) {
-				if (preview == null) {
+				if (preview == null || previewFile == null) {
 					JOptionPane.showMessageDialog(null, "Nothing to run yet");
 				}
 				else {
-					IPointGenerator pG = new RandomPointGenerator(preview.getHeight(),preview.getWidth());
-					IPrimitiveFilter filter = new TrianglePictureFilter(pG);
-					after = filter.apply(preview, valueIterations, valueSamps);
-					JOptionPane.showMessageDialog(null, new ImageIcon(after));
+					RandomPointGenerator rPG = new RandomPointGenerator(preview.getWidth(),preview.getHeight());
+					ComplexTriangleFilter filter = new ComplexTriangleFilter(rPG);
+					BufferedImage output = filter.apply1(preview, valueIterations, valueSamps, previewFile);
+					after = output;
 					shortAfter = new ImageIcon(resize(after, 150, 150));
 				    empty2.setIcon(shortAfter);
-					
 				}
 				
 			}	
