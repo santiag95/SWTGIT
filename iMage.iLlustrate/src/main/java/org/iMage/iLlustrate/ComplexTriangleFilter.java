@@ -42,11 +42,12 @@ public class ComplexTriangleFilter extends TrianglePictureFilter {
 			}
 
 			addToImage(result, bestPrimitive);
-			
+			ref.actualizeIcon(result, i);
 			
 		
 		}
-		ref.actualizeIcon(result);
+		ref.actualizeIcon(result, numberOfIterations);
+		ref.setEndResult(result);
 		return result;
 	}
 	
