@@ -38,6 +38,7 @@ public class MainGenerator extends JFrame implements ChangeListener, ActionListe
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
 	private JPanel panel1;
 	private JPanel panel2;
 	
@@ -129,6 +130,8 @@ public class MainGenerator extends JFrame implements ChangeListener, ActionListe
 		    public void stateChanged(ChangeEvent e) {
 		    	valueIterations = slidIteration.getValue();
 		        iterationStatus.setText("Iterations (" + valueIterations + ")");
+		        runButton.setToolTipText("Press this button to filter the loaded Image with "
+						+ slidIteration.getValue() + " Iterations and " + slidSamps.getValue() + " Samples");
 		    }
 		});
 
@@ -154,6 +157,8 @@ public class MainGenerator extends JFrame implements ChangeListener, ActionListe
 		    public void stateChanged(ChangeEvent e) {
 		    	valueSamps = slidSamps.getValue();
 		        samplesStatus.setText("Samples (" + valueSamps + ")");
+		        runButton.setToolTipText("Press this button to filter the loaded Image with "
+						+ slidIteration.getValue() + " Iterations and " + slidSamps.getValue() + " Samples");
 		    }
 		});
 	}
@@ -162,6 +167,10 @@ public class MainGenerator extends JFrame implements ChangeListener, ActionListe
 		
 		buttonPanel.add(loadButton);
 		buttonPanel.add(runButton);
+		
+		loadButton.setToolTipText("Press this button to load a new Image");
+		runButton.setToolTipText("Press this button to filter the loaded Image with "
+								+ slidIteration.getValue() + " Iterations and " + slidSamps.getValue() + " Samples");
 		
 		loadButton.addActionListener(new ActionListener() {
 			
@@ -176,11 +185,27 @@ public class MainGenerator extends JFrame implements ChangeListener, ActionListe
 				if (retVal == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
 					try { 
-		
+						BufferedImage temp = ImageIO.read(selectedFile);
+					if (temp.getHeight() <= 768 && temp.getWidth() <= 1024) {
 					    preview = ImageIO.read(selectedFile); 
 					    shortPreview = new ImageIcon(resize(preview, 150, 150));
 					    empty1.setIcon(shortPreview);
 					    previewFile = selectedFile;
+					}
+					else {
+						int aprove = JOptionPane.showConfirmDialog(fileChooser, "Your chosen Image surpases the maximal size. "
+								              + "Do you approve the modification of it´s size ?");
+						if (aprove == JOptionPane.YES_OPTION) {
+							preview = resize(ImageIO.read(selectedFile),1024,768); 
+						    shortPreview = new ImageIcon(resize(preview, 150, 150));
+						    empty1.setIcon(shortPreview);
+						    previewFile = selectedFile;
+						}
+						else {
+							JOptionPane.showMessageDialog(fileChooser, "The procces has been canceled");
+						}
+					}
+					    
 					} 
 					catch (IOException ex) {
 						JOptionPane.showMessageDialog(null, "Error occured reading the image");

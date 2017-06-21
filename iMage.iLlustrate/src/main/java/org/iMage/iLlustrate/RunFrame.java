@@ -92,7 +92,6 @@ public class RunFrame extends JFrame implements ActionListener {
 	}
 	
 	public void actualizeIcon(BufferedImage im, int x) {
-		
 		labelImage.setIcon(new ImageIcon(im));
 		labelImage.repaint();
 	}
