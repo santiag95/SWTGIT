@@ -22,8 +22,9 @@
 		<!-- add new modules here -->
     <module>iMage.prizm-plugin</module>
     <module>iMage.bundle</module>
-    <module>iMage.iLlustrate</module>
+    
     <module>iMage.geometrify</module>
     <module>iMage.geometrify-cli</module>
+    <module>iMage.geometrify-gui</module>
 	</modules>
 </project>
