@@ -6,11 +6,14 @@ org/iMage/geometrify/gui/RunWindow$2.class
 org/iMage/geometrify/gui/RunWindow$ImageProcessor.class
 org/iMage/geometrify/gui/PictureFilterObserver.class
 org/iMage/geometrify/gui/MainWindow$1.class
+org/iMage/geometrify/gui/ListModelExample.class
 org/iMage/geometrify/gui/MainWindow.class
 org/iMage/geometrify/gui/GeometrifyGUI.class
 org/iMage/geometrify/gui/GeometrifyGUI$1.class
+org/iMage/geometrify/gui/ListModelExample$1.class
 org/iMage/geometrify/gui/MainWindow$2.class
 org/iMage/geometrify/gui/RunWindow$1.class
 org/iMage/geometrify/gui/RunWindow.class
 org/iMage/geometrify/gui/ObservableTrianglePictureFilter.class
 org/iMage/geometrify/gui/MainWindow$3.class
+org/iMage/geometrify/gui/ListModelExample$2.class

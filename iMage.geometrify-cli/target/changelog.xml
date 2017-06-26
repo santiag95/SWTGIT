@@ -1,4 +1,10 @@
 <changelog><commit>
+					<time>1498225733</time>
+					<sha1>4777d1bfc66c326d6ff7a9837bc7b30eada45e71</sha1>
+					<author>santiag95</author>
+					<branches>refs/heads/master</branches>
+					<msg>Replaced old iLlustrate Files for the template solution geometrify gui</msg>
+				</commit><commit>
 					<time>1498025706</time>
 					<sha1>2f4ceaee1a61da5533783a49b538906feaa2bd92</sha1>
 					<author>santiag95</author>

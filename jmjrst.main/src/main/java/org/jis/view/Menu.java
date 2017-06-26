@@ -25,6 +25,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.UIManager;
+import java.util.Iterator;
 
 import org.iMage.plugins.JmjrstPlugin;
 import org.iMage.plugins.PluginManager;
@@ -180,10 +181,10 @@ public class Menu extends JMenuBar {
 		// SWT1 plug-in Menu
 		JMenu swt1Plugins = new JMenu("Load plug-in");
 
-		List<JmjrstPlugin> plugins = PluginManager.getPlugins();
+		Iterator<JmjrstPlugin> plugins = PluginManager.getPlugins().iterator();
 
-		for (int i = plugins.size() - 1; i >= 0; i--) {
-			final JmjrstPlugin plugin = plugins.get(i);
+		while (plugins.hasNext()) {
+			final JmjrstPlugin plugin = plugins.next();
 			plugin.init(m);
 
 			// add menu item for plug-in

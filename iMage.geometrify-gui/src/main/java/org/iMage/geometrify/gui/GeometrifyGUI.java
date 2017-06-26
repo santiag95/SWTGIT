@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.iMage.geometrify.AbstractPrimitivePictureFilter;
+
 /**
  * This application provides a GUI for the Geometrify image filter.
  * 
@@ -24,12 +26,14 @@ public final class GeometrifyGUI {
 	public static final int PREVIEW_ITERATIONS = 100;
 	public static final int PREVIEW_SAMPLES = 30;
 
+	private AbstractPrimitivePictureFilter abstractFilter;
 	private int numberOfIterations = 100;
 	private int numberOfSamples = 30;
 	private BufferedImage original;
 	private String filename = "walter.png";
 
 	private JFrame window;
+	
 
 	/*
 	 * Private constructor: App is not to be instantiated from outside
@@ -55,12 +59,13 @@ public final class GeometrifyGUI {
 			}
 		}
 
+		
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				GeometrifyGUI app = new GeometrifyGUI();
 				app.loadDefaultImage();
-
+				
 				MainWindow window = new MainWindow(app);
 				window.setDefaultCloseOperation(MainWindow.EXIT_ON_CLOSE);
 				window.setVisible(true);
