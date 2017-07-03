@@ -7,7 +7,11 @@ public class Rectangle implements IPrimitive {
 
 	private BoundingBox boundingBox;
 	private Color color;
-	protected Point aUp, aDown, bUp, bDown;
+	
+	protected Point aDown;
+	protected Point aUp;
+	protected Point bDown;
+	protected Point bUp;
 	
 	public Rectangle(Point a, Point b) {
 		int xMIN = (int) Math.min(a.getX(), b.getX());
@@ -50,8 +54,6 @@ public class Rectangle implements IPrimitive {
 		if(arg.getY() > aDown.getY() && arg.getY() < bUp.getY()) {
 			betweenY = true;
 		}
-		
-		
 		
 		return (betweenX && betweenY);
 	}

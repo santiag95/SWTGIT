@@ -23,7 +23,9 @@ public class RectanglePictureFilter extends AbstractPrimitivePictureFilter{
 		// TODO Auto-generated method stub
 		TrianglePictureFilter t = new TrianglePictureFilter(pointGenerator);
 		t.addToImage(arg0, arg1);
+		
 	}
+	
 
 	@Override
 	public BufferedImage apply(BufferedImage image, int numberOfIterations, int numberOfSamples) {

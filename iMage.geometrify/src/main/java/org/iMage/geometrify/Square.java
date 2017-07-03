@@ -7,10 +7,19 @@ public class Square implements IPrimitive {
 
 	private BoundingBox boundingBox;
 	private Color color;
-	protected Point a,b,c,d;
 	
-	public Square(Point a, Point b) {
+	protected Point aDown;
+	protected Point aUp;
+	protected Point bDown;
+	protected Point bUp;
+	
+	public Square(Point p, int length) {
+		aDown = p;
+		aUp = new Point(p.x, p.y + length);
+		bDown = new Point(p.x + length, p.y);
+		bUp = new Point(p.x + length, p.y + length);
 		
+		this.boundingBox = new BoundingBox(aUp, bDown);
 	}
 	
 	
@@ -27,9 +36,22 @@ public class Square implements IPrimitive {
 	}
 
 	@Override
-	public boolean isInsidePrimitive(Point arg0) {
+	public boolean isInsidePrimitive(Point arg) {
 		// TODO Auto-generated method stub
-		return false;
+		boolean betweenX = false;
+		boolean betweenY = false;
+		
+		if(arg.getX() > aDown.getX() && arg.getX() < bDown.getX()) {
+			betweenX = true;
+		}
+		
+		if(arg.getY() > aDown.getY() && arg.getY() < bUp.getY()) {
+			betweenY = true;
+		}
+		
+		
+		
+		return (betweenX && betweenY);
 	}
 
 	@Override

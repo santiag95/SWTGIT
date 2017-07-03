@@ -7,7 +7,7 @@ Implementation-Vendor-Id: swt1.ub2.a5
 Class-Path: lib/commons-cli/commons-cli/1.4/commons-cli-1.4.jar lib/sw
  t1/ub2/a4/iMage.geometrify/0.0.1-SNAPSHOT/iMage.geometrify-0.0.1-SNAP
  SHOT.jar lib/swt1/iMage.geometrify-base/0.0.1-SNAPSHOT/iMage.geometri
- fy-base-0.0.1-20170621.141547-5.jar
+ fy-base-0.0.1-20170630.142135-7.jar
 Build-Jdk: 1.8.0_25
 Specification-Version: 0.0.1-SNAPSHOT
 Created-By: Maven Integration for Eclipse

@@ -1,4 +1,16 @@
 <changelog><commit>
+					<time>1499067623</time>
+					<sha1>73dcba8a44e00eb642d8ffbd1b4a1b6fd074a5ec</sha1>
+					<author>santiag95</author>
+					<branches>refs/heads/master</branches>
+					<msg>Added the new figures without implementing</msg>
+				</commit><commit>
+					<time>1498483961</time>
+					<sha1>bbc0366fe0a901d442ce062cf415f5836e74bc56</sha1>
+					<author>santiag95</author>
+					<branches>refs/heads/master</branches>
+					<msg>Added the rectangle class and filter and edited the pluginManager</msg>
+				</commit><commit>
 					<time>1498225733</time>
 					<sha1>4777d1bfc66c326d6ff7a9837bc7b30eada45e71</sha1>
 					<author>santiag95</author>
