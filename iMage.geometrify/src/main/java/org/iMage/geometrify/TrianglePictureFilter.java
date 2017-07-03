@@ -181,7 +181,7 @@ public class TrianglePictureFilter extends AbstractPrimitivePictureFilter {
 					int red = (argb >> 16) & HEX_FF;
 					int green = (argb >> 8) & HEX_FF;
 					int blue = argb & HEX_FF;
-
+ 
 					difference += Math.abs(orgPixels[pixelIndex] - ((currPixels[pixelIndex] + blue) / 2));
 					difference += Math.abs(orgPixels[pixelIndex + 1] - ((currPixels[pixelIndex + 1] + green) / 2));
 					difference += Math.abs(orgPixels[pixelIndex + 2] - ((currPixels[pixelIndex + 2] + red) / 2));

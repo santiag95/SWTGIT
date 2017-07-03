@@ -34,6 +34,7 @@ public final class PluginManager {
 		}
 		// Sortieren mit dem Comparator aus JmjrstPlugin
 		Collections.sort(p);
+		
 		IterablePlugins itPlugs = new IterablePlugins(p);
 		
 		return itPlugs;
