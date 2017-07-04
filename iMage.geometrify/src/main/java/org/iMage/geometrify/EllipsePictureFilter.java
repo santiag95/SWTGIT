@@ -1,38 +1,27 @@
 package org.iMage.geometrify;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
+import java.awt.Point;
 
-public class EllipsePictureFilter extends AbstractPrimitivePictureFilter{
+public class EllipsePictureFilter extends GeneralPictureFilter{
 
-	@Override
-	protected void addToImage(BufferedImage arg0, IPrimitive arg1) {
-		// TODO Auto-generated method stub
-		
+	public EllipsePictureFilter(IPointGenerator pointGenerator) {
+		super(pointGenerator);
 	}
+	
+	
 
-	@Override
-	public BufferedImage apply(BufferedImage arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected Color calculateColor(BufferedImage arg0, IPrimitive arg1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected int calculateDifference(BufferedImage arg0, BufferedImage arg1, IPrimitive arg2) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	protected IPrimitive generatePrimitive() {
 		// TODO Auto-generated method stub
-		return null;
+		Point centerPoint = pointGenerator.nextPoint();
+		Point pointToWidthRadius = pointGenerator.nextPoint();
+		Point pointToHeightRadius = pointGenerator.nextPoint();
+		int width = calculateDistance(centerPoint, pointToWidthRadius) * 2;
+		int height = calculateDistance(centerPoint, pointToHeightRadius) * 2;
+		
+		return new Ellipse(centerPoint, width, height);
 	}
+	
 
 }

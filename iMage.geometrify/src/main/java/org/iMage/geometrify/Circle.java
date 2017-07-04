@@ -42,15 +42,13 @@ public class Circle implements IPrimitive {
 
 	@Override
 	public boolean isInsidePrimitive(Point arg0) {
-		if (radius <= 0.0)
-            return false;
-        
-        Point normalized = new Point(arg0.x - center.x, arg0.y - center.y);
-
-        boolean total =  ((double)(normalized.x * normalized.y) / (radius * radius)) + 
-        		((double)(normalized.y * normalized.y) / (radius * radius)) <= 1.0;
-        
-        return total;
+		int distanceToPoint = calculateDistance(center, arg0);
+		return distanceToPoint < radius;
+	}
+	
+	public int calculateDistance(Point a, Point b) {
+		double distance = Math.sqrt((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y));
+		return (int)distance;
 	}
 
 	@Override

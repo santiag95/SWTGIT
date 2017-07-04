@@ -1,38 +1,28 @@
 package org.iMage.geometrify;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
 
-public class CirclePictureFilter extends AbstractPrimitivePictureFilter{
+import java.awt.Point;
 
-	@Override
-	protected void addToImage(BufferedImage arg0, IPrimitive arg1) {
-		// TODO Auto-generated method stub
-		
+public class CirclePictureFilter extends GeneralPictureFilter{
+
+	
+	public CirclePictureFilter(IPointGenerator pointGenerator) {
+		super(pointGenerator);
 	}
-
-	@Override
-	public BufferedImage apply(BufferedImage arg0, int arg1, int arg2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected Color calculateColor(BufferedImage arg0, IPrimitive arg1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected int calculateDifference(BufferedImage arg0, BufferedImage arg1, IPrimitive arg2) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 	@Override
 	protected IPrimitive generatePrimitive() {
 		// TODO Auto-generated method stub
-		return null;
+		
+		Point centerPoint = pointGenerator.nextPoint();
+		Point pointToLength = pointGenerator.nextPoint();
+		
+		int length = calculateDistance(centerPoint, pointToLength) * 2;
+		
+		
+		return new Circle(centerPoint, length);
 	}
+	
 
 }

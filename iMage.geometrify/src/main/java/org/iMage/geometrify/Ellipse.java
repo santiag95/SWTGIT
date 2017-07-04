@@ -17,14 +17,14 @@ public class Ellipse implements IPrimitive {
 	private int yRadius;
 	
 	
-	public Ellipse(Point p, int height, int width) {
+	public Ellipse(Point p, int width, int height) {
 		this.center = p;
 		this.xRadius = width / 2;
 		this.yRadius = height / 2;
-		aDown = new Point(p.x - (width/2), p.y - (height/2));
-		aUp = new Point(p.x - (width/2), p.y + (height/2));
-		bDown = new Point(p.x + (width/2), p.y - (height/2));
-		bUp = new Point(p.x + (width/2), p.y + (height/2));
+		aDown = new Point(p.x - xRadius, p.y - yRadius);
+		aUp = new Point(p.x - xRadius, p.y + yRadius);
+		bDown = new Point(p.x + xRadius, p.y - yRadius);
+		bUp = new Point(p.x + xRadius, p.y + yRadius);
 		
 		this.boundingBox = new BoundingBox(aUp, bDown);
 	}
@@ -43,7 +43,7 @@ public class Ellipse implements IPrimitive {
 
 	@Override
 	public boolean isInsidePrimitive(Point arg0) {
-		 if (xRadius <= 0.0 || yRadius <= 0.0)
+		 if (xRadius <= 0 || yRadius <= 0)
 	            return false;
 	        
 	        Point normalized = new Point(arg0.x - center.x, arg0.y - center.y);
