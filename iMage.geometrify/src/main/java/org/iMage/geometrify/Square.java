@@ -1,18 +1,42 @@
 package org.iMage.geometrify;
 
-import java.awt.Color;
 import java.awt.Point;
 
-public class Square implements IPrimitive {
+/**
+ * A square.
+ * 
+ * @author santiagotafur
+ *@version 1.0
+ */
+public class Square extends GeneralPrimitive {
 
+	/**
+	 * Models the boundingBox of the primitive.
+	 */
 	private BoundingBox boundingBox;
-	private Color color;
 	
+	/**
+	 * the Point of bottomLeft.
+	 */
 	protected Point aDown;
+	/**
+	 * the Point of  upperLeft.
+	 */
 	protected Point aUp;
+	/**
+	 * the Point of bottomRight.
+	 */
 	protected Point bDown;
+	/**
+	 * the Point of upperRight.
+	 */
 	protected Point bUp;
 	
+	/**
+	 * Creates a Square.
+	 * @param p the start point
+	 * @param length the length of the sides
+	 */
 	public Square(Point p, int length) {
 		aDown = p;
 		aUp = new Point(p.x, p.y + length);
@@ -21,21 +45,10 @@ public class Square implements IPrimitive {
 		
 		this.boundingBox = new BoundingBox(aUp, bDown);
 	}
-	
-	
-	@Override
-	public BoundingBox getBoundingBox() {
-		// TODO Auto-generated method stub
-		return boundingBox;
-	}
 
-	@Override
-	public Color getColor() {
-		// TODO Auto-generated method stub
-		return color;
-	}
-
-	@Override
+	/* (non-Javadoc)
+	 * @see org.iMage.geometrify.GeneralPrimitive#isInsidePrimitive(java.awt.Point)
+	 */
 	public boolean isInsidePrimitive(Point arg) {
 		// TODO Auto-generated method stub
 		boolean betweenX = false;
@@ -53,12 +66,8 @@ public class Square implements IPrimitive {
 		
 		return (betweenX && betweenY);
 	}
+	
+	
 
-	@Override
-	public void setColor(Color c) {
-		// TODO Auto-generated method stub
-		this.color = c;
-		
-	}
 
 }

@@ -12,6 +12,10 @@ import java.awt.Point;
  */
 public class TrianglePictureFilter extends GeneralPictureFilter {
 
+	
+
+	
+
 	/**
 	 * Constructs a {@link TrianglePictureFilter} with an specified
 	 * {@link IPointGenerator}.

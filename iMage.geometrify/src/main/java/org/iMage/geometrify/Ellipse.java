@@ -1,22 +1,60 @@
 package org.iMage.geometrify;
 
-import java.awt.Color;
+
 import java.awt.Point;
 
-public class Ellipse implements IPrimitive {
-
+/**
+ * An Ellipse.
+ * 
+ * @author santiagotafur
+ *@version 1.0
+ */
+public class Ellipse extends GeneralPrimitive {
+	/**
+	 * Models the boundingBox of the primitive.
+	 */
+	private BoundingBox boundingBox;
+	
+	/**
+	 * the Point of bottomLeft.
+	 */
 	protected Point aDown;
+	/**
+	 * the Point of  upperLeft.
+	 */
 	protected Point aUp;
+	/**
+	 * the Point of bottomRight.
+	 */
 	protected Point bDown;
+	/**
+	 * the Point of upperRight.
+	 */
 	protected Point bUp;
+	
+	/**
+	 * the point of the center.
+	 */
 	protected Point center;
 	
-	private BoundingBox boundingBox;
-	private Color color;
+	
+	
+	/**
+	 * the radius on the x axis.
+	 */
 	private int xRadius;
+	/**
+	 * the radius on the y axis. 
+	 */
 	private int yRadius;
 	
 	
+	/**
+	 * Creates an Ellipse.
+	 * @param p center point to create it.
+	 * @param width of the ellipse.
+	 * @param height of the ellipse.
+	 */
 	public Ellipse(Point p, int width, int height) {
 		this.center = p;
 		this.xRadius = width / 2;
@@ -29,35 +67,22 @@ public class Ellipse implements IPrimitive {
 		this.boundingBox = new BoundingBox(aUp, bDown);
 	}
 	
-	@Override
-	public BoundingBox getBoundingBox() {
-		// TODO Auto-generated method stub
-		return boundingBox;
-	}
 
-	@Override
-	public Color getColor() {
-		// TODO Auto-generated method stub
-		return color;
-	}
-
+	/* (non-Javadoc)
+	 * @see org.iMage.geometrify.GeneralPrimitive#isInsidePrimitive(java.awt.Point)
+	 */
 	@Override
 	public boolean isInsidePrimitive(Point arg0) {
-		 if (xRadius <= 0 || yRadius <= 0)
+		 if (xRadius <= 0 || yRadius <= 0) {
 	            return false;
-	        
+		 }
 	        Point normalized = new Point(arg0.x - center.x, arg0.y - center.y);
 
-	        boolean total =  ((double)(normalized.x * normalized.y) / (xRadius * xRadius)) + 
-	        		((double)(normalized.y * normalized.y) / (yRadius * yRadius)) <= 1.0;
+	        boolean total =  ((double) (normalized.x * normalized.y) / (xRadius * xRadius)) 
+	        		+ ((double) (normalized.y * normalized.y) / (yRadius * yRadius)) <= 1.0;
 	        
 	        return total;
 	}
 
-	@Override
-	public void setColor(Color arg0) {
-		// TODO Auto-generated method stub
-		this.color = arg0;
-	}
 
 }

@@ -4,15 +4,28 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+/**
+ * Models a general filter to model the rest.
+ * @author santiagotafur
+ *@version 1.0
+ */
 public abstract class GeneralPictureFilter extends AbstractPrimitivePictureFilter{
 
 	
+	
 	private static final int HEX_FF = 0xff;
 	
+	/**
+	 * creates a GeneralPicturFilter.
+	 * @param pointGenerator to build the filter.
+	 */
 	public GeneralPictureFilter(IPointGenerator pointGenerator) {
 		super(pointGenerator);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.iMage.geometrify.AbstractPrimitivePictureFilter#addToImage(java.awt.image.BufferedImage, org.iMage.geometrify.IPrimitive)
+	 */
 	@Override
 	protected void addToImage(BufferedImage current, IPrimitive primitive) {
 		assert (primitive.getColor() != null) : "Average color of primitive has not been calculated, yet";
@@ -62,6 +75,9 @@ public abstract class GeneralPictureFilter extends AbstractPrimitivePictureFilte
 		current.getRaster().setPixels(0, 0, width, height, imgPixels);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.iMage.geometrify.AbstractPrimitivePictureFilter#apply(java.awt.image.BufferedImage, int, int)
+	 */
 	public BufferedImage apply(BufferedImage image, int numberOfIterations, int numberOfSamples) {
 		// TODO Auto-generated method stub
 				int width = image.getWidth();
@@ -91,6 +107,9 @@ public abstract class GeneralPictureFilter extends AbstractPrimitivePictureFilte
 				return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.iMage.geometrify.AbstractPrimitivePictureFilter#calculateColor(java.awt.image.BufferedImage, org.iMage.geometrify.IPrimitive)
+	 */
 	@Override
 	protected Color calculateColor(BufferedImage original, IPrimitive primitive) {
 		int bandwidth = (original.getColorModel().hasAlpha()) ? 4 : 3;
@@ -151,6 +170,9 @@ public abstract class GeneralPictureFilter extends AbstractPrimitivePictureFilte
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.iMage.geometrify.AbstractPrimitivePictureFilter#calculateDifference(java.awt.image.BufferedImage, java.awt.image.BufferedImage, org.iMage.geometrify.IPrimitive)
+	 */
 	@Override
 	protected int calculateDifference(BufferedImage original, BufferedImage current, IPrimitive primitive) {
 		assert (primitive.getColor() != null) : "Average color of primitive has not been calculated, yet";
@@ -207,11 +229,20 @@ public abstract class GeneralPictureFilter extends AbstractPrimitivePictureFilte
 		return difference;
 	}
 
+	/**
+	 * Calculates the distance between two points.
+	 * @param a First point.
+	 * @param b Second point.
+	 * @return the distance between the two points.
+	 */
 	protected int calculateDistance(Point a, Point b) {
 
-		double distance = Math.sqrt((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y));
-		return (int)distance;
+		double distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+		return (int) distance;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.iMage.geometrify.AbstractPrimitivePictureFilter#generatePrimitive()
+	 */
 	protected abstract IPrimitive generatePrimitive();
 }

@@ -6,14 +6,18 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.iMage.geometrify.CirclePictureFilter;
+import org.iMage.geometrify.EllipsePictureFilter;
 import org.iMage.geometrify.IPointGenerator;
 import org.iMage.geometrify.IPrimitive;
 import org.iMage.geometrify.IPrimitiveFilter;
-
+import org.iMage.geometrify.RectanglePictureFilter;
+import org.iMage.geometrify.SquarePictureFilter;
+import org.iMage.geometrify.TrianglePictureFilter;
 import org.iMage.geometrify.TrianglePictureFilter;
 
 /**
- * This {@link IPrimitiveFilter} adapts the {@link TrianglePictureFilter1} to be
+ * This {@link IPrimitiveFilter} adapts the {@link TrianglePictureFilter} to be
  * able to display snapshots of iterations
  * 
  * @author Tobias Hey, Dominic Ziegler

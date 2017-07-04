@@ -32,8 +32,6 @@ public final class PluginManager {
 		for (final JmjrstPlugin plugin : serviceLoader) {
 			p.add(plugin);
 		}
-		// Sortieren mit dem Comparator aus JmjrstPlugin
-		Collections.sort(p);
 		
 		IterablePlugins itPlugs = new IterablePlugins(p);
 		

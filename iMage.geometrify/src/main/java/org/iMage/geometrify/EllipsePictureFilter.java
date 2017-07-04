@@ -2,8 +2,22 @@ package org.iMage.geometrify;
 
 import java.awt.Point;
 
-public class EllipsePictureFilter extends GeneralPictureFilter{
+/**
+ * The {@link CirclePictureFilter} is a {@link IPrimitiveFilter} which is able
+ * to reconstruct an image through {@link Circle}s.
+ * @author santiagotafur
+ *@version 1.0
+ */
+public class EllipsePictureFilter extends GeneralPictureFilter {
 
+	/**
+	 * Constructs a {@link EllipsePictureFilter} with an specified
+	 * {@link IPointGenerator}.
+	 *
+	 * @param pointGenerator
+	 *            The {@link IPointGenerator} to use for generating
+	 *            {@link Ellipse} {@link Point}s
+	 */
 	public EllipsePictureFilter(IPointGenerator pointGenerator) {
 		super(pointGenerator);
 	}
@@ -11,6 +25,9 @@ public class EllipsePictureFilter extends GeneralPictureFilter{
 	
 
 
+	/* (non-Javadoc)
+	 * @see org.iMage.geometrify.GeneralPictureFilter#generatePrimitive()
+	 */
 	@Override
 	protected IPrimitive generatePrimitive() {
 		// TODO Auto-generated method stub

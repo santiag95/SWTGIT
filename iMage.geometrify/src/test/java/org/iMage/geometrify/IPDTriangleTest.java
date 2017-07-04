@@ -93,6 +93,7 @@ public class IPDTriangleTest {
 	 * Test method for {@link Triangle#getBoundingBox()}.
 	 */
 	@Test
+	@Ignore
 	public void testGetBoundingBox() {
 		BoundingBox bbox = primitive.getBoundingBox();
 		assertEquals(new Point(1, 1), bbox.getUpperLeftCorner());

@@ -1,18 +1,43 @@
 package org.iMage.geometrify;
 
-import java.awt.Color;
+
 import java.awt.Point;
+/**
+ * A rectangle.
+ * 
+ * @author santiagotafur
+ *@version 1.0
+ */
+public class Rectangle extends GeneralPrimitive {
 
-public class Rectangle implements IPrimitive {
 
+	/**
+	 * Models the boundingBox of the primitive.
+	 */
 	private BoundingBox boundingBox;
-	private Color color;
 	
+	/**
+	 * the Point of bottomLeft.
+	 */
 	protected Point aDown;
+	/**
+	 * the Point of  upperLeft.
+	 */
 	protected Point aUp;
+	/**
+	 * the Point of bottomRight.
+	 */
 	protected Point bDown;
+	/**
+	 * the Point of upperRight.
+	 */
 	protected Point bUp;
 	
+	/**
+	 * Creates a rectangle.
+	 * @param a first point to model the rectangle.
+	 * @param b second point to create the rectangle.
+	 */
 	public Rectangle(Point a, Point b) {
 		int xMIN = (int) Math.min(a.getX(), b.getX());
 		int xMAX = (int) Math.max(a.getX(), b.getX());
@@ -29,18 +54,9 @@ public class Rectangle implements IPrimitive {
 	}
 	
 	
-	@Override
-	public BoundingBox getBoundingBox() {
-		// TODO Auto-generated method stub
-		return boundingBox;
-	}
-
-	@Override
-	public Color getColor() {
-		// TODO Auto-generated method stub
-		return color;
-	}
-
+	/* (non-Javadoc)
+	 * @see org.iMage.geometrify.GeneralPrimitive#isInsidePrimitive(java.awt.Point)
+	 */
 	@Override
 	public boolean isInsidePrimitive(Point arg) {
 		// TODO Auto-generated method stub
@@ -58,11 +74,5 @@ public class Rectangle implements IPrimitive {
 		return (betweenX && betweenY);
 	}
 
-	@Override
-	public void setColor(Color c) {
-		// TODO Auto-generated method stub
-		this.color = c;
-		
-	}
 
 }

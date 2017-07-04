@@ -1,25 +1,61 @@
 package org.iMage.geometrify;
 
-import java.awt.Color;
+
 import java.awt.Point;
 
-public class Circle implements IPrimitive {
-
+/**
+ * A Circle.
+ * 
+ * @author santiagotafur
+ *@version 1.0
+ */
+public class Circle extends GeneralPrimitive {
+	/**
+	 * Models the boundingBox of the primitive.
+	 */
+	private BoundingBox boundingBox;
+	
+	/**
+	 * the Point of bottomLeft.
+	 */
 	protected Point aDown;
+	/**
+	 * the Point of  upperLeft.
+	 */
 	protected Point aUp;
+	/**
+	 * the Point of bottomRight.
+	 */
 	protected Point bDown;
+	/**
+	 * the Point of upperRight.
+	 */
 	protected Point bUp;
+	
+	/**
+	 * the point of the center.
+	 */
 	protected Point center;
 	
+	/**
+	 * Radius of the circle.
+	 */
 	private int radius;
+	/**
+	 * diameter of the circle.
+	 */
 	private int diameter;
-	private BoundingBox boundingBox;
-	private Color color;
 	
 	
+	
+	/**
+	 * Creates a circle.
+	 * @param p center point to create a circle.
+	 * @param diameter diameter of the circle.
+	 */
 	public Circle(Point p, int diameter) {
 		this.diameter = diameter;
-		this.radius = this.diameter/2;
+		this.radius = this.diameter / 2;
 		this.center = p;
 		aDown = new Point(p.x - radius, p.y - radius);
 		aUp = new Point(p.x - radius, p.y + radius);
@@ -28,34 +64,28 @@ public class Circle implements IPrimitive {
 		
 		this.boundingBox = new BoundingBox(aUp, bDown);
 	}
-	@Override
-	public BoundingBox getBoundingBox() {
-		// TODO Auto-generated method stub
-		return boundingBox;
-	}
+	
 
-	@Override
-	public Color getColor() {
-		// TODO Auto-generated method stub
-		return color;
-	}
-
+	/* (non-Javadoc)
+	 * @see org.iMage.geometrify.GeneralPrimitive#isInsidePrimitive(java.awt.Point)
+	 */
 	@Override
 	public boolean isInsidePrimitive(Point arg0) {
 		int distanceToPoint = calculateDistance(center, arg0);
 		return distanceToPoint < radius;
 	}
 	
+	/**
+	 * Calculates the distance between two points.
+	 * @param a first point.
+	 * @param b second point.
+	 * @return distance between the two points.
+	 */
 	public int calculateDistance(Point a, Point b) {
-		double distance = Math.sqrt((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y));
-		return (int)distance;
+		double distance = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+		return (int) distance;
 	}
 
-	@Override
-	public void setColor(Color arg0) {
-		// TODO Auto-generated method stub
-		this.color = arg0;
-		
-	}
+	
 
 }

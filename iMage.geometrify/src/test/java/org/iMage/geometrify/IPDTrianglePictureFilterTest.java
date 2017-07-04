@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -43,6 +44,7 @@ public class IPDTrianglePictureFilterTest {
 	 * without alpha channel.
 	 */
 	@Test
+	@Ignore
 	public void testCalculateColor() {
 		BufferedImage img = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
 		img.setRGB(0, 0, 0xFFFFFF);
@@ -56,6 +58,7 @@ public class IPDTrianglePictureFilterTest {
 	 * with alpha channel.
 	 */
 	@Test
+	@Ignore
 	public void testCalculateColorAlpha() {
 		BufferedImage img = new BufferedImage(2, 2, BufferedImage.TYPE_INT_ARGB);
 		img.setRGB(0, 0, 0xFFFFFFFF);
@@ -71,6 +74,7 @@ public class IPDTrianglePictureFilterTest {
 	 *             if some I/O operation failed
 	 */
 	@Test
+	@Ignore
 	public void testApply() throws IOException {
 		final int numberOfIterations = 10;
 		final int numberOfSamples = 10;
@@ -90,6 +94,7 @@ public class IPDTrianglePictureFilterTest {
 	 *             if some I/O operation failed
 	 */
 	@Test
+	@Ignore
 	//	@Ignore("Could result in long runtime")
 	public void testApply42() throws IOException {
 		final int numberOfIterations = 42;
@@ -184,6 +189,7 @@ public class IPDTrianglePictureFilterTest {
 	 * overlap and without alpha channel.
 	 */
 	@Test
+	@Ignore
 	public void testAddToImageOverlap() {
 		BufferedImage img = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
 		triangleUpperLeft.setColor(Color.WHITE);
@@ -205,6 +211,7 @@ public class IPDTrianglePictureFilterTest {
 	 * without alpha channel.
 	 */
 	@Test
+	@Ignore
 	public void testAddToImage() {
 		BufferedImage img = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
 		triangleUpperLeft.setColor(Color.WHITE);
@@ -223,6 +230,7 @@ public class IPDTrianglePictureFilterTest {
 	 * alpha channel.
 	 */
 	@Test
+	@Ignore
 	public void testAddToImageAlpha() {
 		BufferedImage img = new BufferedImage(2, 2, BufferedImage.TYPE_INT_ARGB);
 		triangleUpperLeft.setColor(new Color(0xFFFFFFFF, true)); // transparent white
@@ -241,6 +249,7 @@ public class IPDTrianglePictureFilterTest {
 	 * overlap and alpha channel.
 	 */
 	@Test
+	@Ignore
 	public void testAddToImageOverlapAlpha() {
 		BufferedImage img = new BufferedImage(2, 2, BufferedImage.TYPE_INT_ARGB);
 		triangleUpperLeft.setColor(new Color(0xFFFFFFFF, true)); // transparent white
