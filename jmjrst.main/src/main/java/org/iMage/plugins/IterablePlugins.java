@@ -13,8 +13,12 @@ public class IterablePlugins implements Iterable<JmjrstPlugin>{
 		pluginList = new JmjrstPlugin[p.size()];
 		pluginList = p.toArray(pluginList);
         this.currentSize = pluginList.length;
+        sort();
 	}
 
+	public void sort() {
+		
+	}
 	@Override
 	public Iterator<JmjrstPlugin> iterator() {
 		Iterator<JmjrstPlugin> it = new Iterator<JmjrstPlugin>() {

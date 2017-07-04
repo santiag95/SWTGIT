@@ -207,7 +207,7 @@ public abstract class GeneralPictureFilter extends AbstractPrimitivePictureFilte
 		return difference;
 	}
 
-	public int calculateDistance(Point a, Point b) {
+	protected int calculateDistance(Point a, Point b) {
 
 		double distance = Math.sqrt((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y));
 		return (int)distance;
