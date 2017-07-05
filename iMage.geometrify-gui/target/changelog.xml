@@ -1,4 +1,10 @@
 <changelog><commit>
+					<time>1499235807</time>
+					<sha1>5125c9d9946905fb68867fc4f9b2206cb3a39189</sha1>
+					<author>santiag95</author>
+					<branches>refs/heads/master</branches>
+					<msg>Added the filter list without the function</msg>
+				</commit><commit>
 					<time>1499203107</time>
 					<sha1>a1e5dc2312bc96a5bf7a79bc11421bee7492e673</sha1>
 					<author>santiag95</author>

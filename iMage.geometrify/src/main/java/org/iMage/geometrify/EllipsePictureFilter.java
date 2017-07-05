@@ -3,8 +3,8 @@ package org.iMage.geometrify;
 import java.awt.Point;
 
 /**
- * The {@link CirclePictureFilter} is a {@link IPrimitiveFilter} which is able
- * to reconstruct an image through {@link Circle}s.
+ * The {@link EllipsePictureFilter} is a {@link IPrimitiveFilter} which is able
+ * to reconstruct an image through {@link Ellipse}s.
  * @author santiagotafur
  *@version 1.0
  */

@@ -4,8 +4,8 @@ import java.awt.Point;
 
 
 /**
- * The {@link CirclePictureFilter} is a {@link IPrimitiveFilter} which is able
- * to reconstruct an image through {@link Circle}s.
+ * The {@link SquarePictureFilter} is a {@link IPrimitiveFilter} which is able
+ * to reconstruct an image through {@link Square}s.
  * @author santiagotafur
  *@version 1.0
  */

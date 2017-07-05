@@ -54,17 +54,18 @@ public class Square extends GeneralPrimitive {
 		boolean betweenX = false;
 		boolean betweenY = false;
 		
-		if(arg.getX() > aDown.getX() && arg.getX() < bDown.getX()) {
+		if (arg.getX() > aDown.getX() && arg.getX() < bDown.getX()) {
 			betweenX = true;
 		}
 		
-		if(arg.getY() > aDown.getY() && arg.getY() < bUp.getY()) {
+		if (arg.getY() > aDown.getY() && arg.getY() < bUp.getY()) {
 			betweenY = true;
 		}
 		
 		
 		
 		return (betweenX && betweenY);
+		
 	}
 	
 	
