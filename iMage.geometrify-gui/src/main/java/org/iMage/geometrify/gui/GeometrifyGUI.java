@@ -48,6 +48,12 @@ public final class GeometrifyGUI {
 	 *            command line arguments
 	 */
 	public static void main(String[] args) {
+		
+		ChooseFilterList go = new ChooseFilterList();
+		go.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		go.setSize(300,200);
+		go.setVisible(true);
+		
 		// Find the system look and feel if present
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
