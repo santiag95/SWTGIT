@@ -1,46 +1,33 @@
 package org.iMage.geometrify;
 
-import java.awt.Point;
-
+import org.kohsuke.MetaInfServices;
 
 /**
- * The {@link SquarePictureFilter} is a {@link IPrimitiveFilter} which is able
- * to reconstruct an image through {@link Square}s.
- * @author santiagotafur
- *@version 1.0
+ * The "Geometrify" filter for squares.
+ * 
+ * @author Dominic Ziegler
+ * @version 1.0
  */
-public class SquarePictureFilter extends GeneralPictureFilter {
-
-	
+@MetaInfServices(PictureFilter.class)
+public class SquarePictureFilter extends PictureFilter {
 	/**
-	 * Constructs a {@link SquarePictureFilter} with an specified
-	 * {@link IPointGenerator}.
-	 *
+	 * Creates a new picture filter for squares.
+	 * 
 	 * @param pointGenerator
-	 *            The {@link IPointGenerator} to use for generating
-	 *            {@link Square} {@link Point}s
+	 *            the source to be used for generating points
 	 */
 	public SquarePictureFilter(IPointGenerator pointGenerator) {
 		super(pointGenerator);
 	}
-	
 
-
-	/* (non-Javadoc)
-	 * @see org.iMage.geometrify.GeneralPictureFilter#generatePrimitive()
+	/**
+	 * Creates a new picture filter for squares.
 	 */
-	@Override
-	protected IPrimitive generatePrimitive() {
-		// TODO Auto-generated method stub
-		
-		Point centerPoint = pointGenerator.nextPoint();
-		Point pointToLength = pointGenerator.nextPoint();
-		
-		int length = calculateDistance(centerPoint, pointToLength);
-		
-		
-		return new Square(centerPoint, length);
+	public SquarePictureFilter() {
 	}
 	
-
+	@Override
+	protected IPrimitive generatePrimitive() {
+		return new Square(pointGenerator.nextPoint(), pointGenerator.nextPoint());
+	}
 }

@@ -1,7 +1,6 @@
 package org.iMage.plugins;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ServiceLoader;
 
@@ -19,22 +18,21 @@ public final class PluginManager {
 	}
 
 	/**
-	 * Return all available {@link JmjrstPlugin}s sorted accordingly to their
-	 * priority.
+	 * Return an {@link Iterable} Object with all available
+	 * {@link JmjrstPlugin}s sorted accordingly to their priority.
 	 * 
-	 * @return all available plug-ins sorted according to their priority in
-	 *         ascending order.
+	 * @return an {@link Iterable} Object containing all available plug-ins
+	 *         sorted according to their priority in ascending order.
 	 */
-	public static IterablePlugins getPlugins() {
+	public static Iterable<JmjrstPlugin> getPlugins() {
 		ServiceLoader<JmjrstPlugin> serviceLoader = ServiceLoader.load(JmjrstPlugin.class);
 
 		List<JmjrstPlugin> p = new ArrayList<>();
 		for (final JmjrstPlugin plugin : serviceLoader) {
 			p.add(plugin);
 		}
-		
-		IterablePlugins itPlugs = new IterablePlugins(p);
-		
-		return itPlugs;
+
+		return new PluginContainer(p);
 	}
+
 }

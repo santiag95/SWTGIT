@@ -3,8 +3,6 @@ package org.iMage.geometrify;
 import java.awt.Point;
 import java.util.Random;
 
-import org.iMage.geometrify.IPointGenerator;
-
 /**
  * Provides an infinite source of points at random coordinates within a given range.
  * 

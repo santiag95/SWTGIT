@@ -1,39 +1,31 @@
 package org.iMage.geometrify;
 
-
-import java.awt.Point;
+import org.kohsuke.MetaInfServices;
 
 /**
- * The {@link TrianglePictureFilter} is a {@link IPrimitiveFilter} which is able
- * to reconstruct an image through {@link Triangle}s.
- *
+ * The "Geometrify" filter for triangles.
+ * 
  * @author Tobias Hey
- *
+ * @version 1.0
  */
-public class TrianglePictureFilter extends GeneralPictureFilter {
-
-	
-
-	
-
+@MetaInfServices(PictureFilter.class)
+public class TrianglePictureFilter extends PictureFilter {
 	/**
-	 * Constructs a {@link TrianglePictureFilter} with an specified
-	 * {@link IPointGenerator}.
-	 *
+	 * Creates a new picture filter for triangles
+	 * 
 	 * @param pointGenerator
-	 *            The {@link IPointGenerator} to use for generating
-	 *            {@link Triangle} {@link Point}s
+	 *           the source to be used for generating points
 	 */
 	public TrianglePictureFilter(IPointGenerator pointGenerator) {
 		super(pointGenerator);
+	}	
+
+	/**
+	 * Creates a new picture filter for triangles.
+	 */
+	public TrianglePictureFilter() {
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see
-	 * org.iMage.geometrify.AbstractPrimitivePictureFilter#generatePrimitive()
-	 */
 	@Override
 	protected IPrimitive generatePrimitive() {
 		return new Triangle(pointGenerator.nextPoint(), pointGenerator.nextPoint(), pointGenerator.nextPoint());

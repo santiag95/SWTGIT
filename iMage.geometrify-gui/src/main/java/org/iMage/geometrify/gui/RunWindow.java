@@ -5,9 +5,14 @@ import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
 import javax.imageio.ImageIO;
@@ -23,11 +28,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JSlider;
 import javax.swing.SwingWorker;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.io.FilenameUtils;
-import org.iMage.geometrify.IPointGenerator;
+import org.iMage.geometrify.PictureFilter;
+import org.iMage.geometrify.PictureFilter.Memento;
 import org.iMage.geometrify.RandomPointGenerator;
 
 /**
@@ -43,12 +52,16 @@ public class RunWindow extends JDialog {
 
 	private JPanel controls = new JPanel();
 	private JPanel upperControls = new JPanel();
+	private JPanel snapControl = new JPanel();
 	private JLabel preview = new JLabel();
+	private JSlider slider = new JSlider();
 	private JButton saveButton = new JButton("Save");
 
 	private BufferedImage output;
 
-	private ObservableTrianglePictureFilter filter;
+	private PictureFilter filter;
+
+	private List<Memento> mementos;
 
 	private ImageProcessor processor = new ImageProcessor();
 
@@ -67,12 +80,13 @@ public class RunWindow extends JDialog {
 		protected void done() {
 			try {
 				output = get();
-			} catch (InterruptedException | ExecutionException e) {
+				mementos = filter.getMementos();
+			} catch (CancellationException | InterruptedException | ExecutionException e) {
 				// ignore
 			}
-			preview.setIcon(new ImageIcon(output));
 			preview.setVisible(true);
 			saveButton.setEnabled(true);
+			slider.setEnabled(true);
 		}
 	}
 
@@ -88,13 +102,15 @@ public class RunWindow extends JDialog {
 		super(main);
 		this.app = app;
 		observer = new UpdatePreviewObserver(preview);
+		mementos = new ArrayList<>();
 
 		BufferedImage original = app.getOriginalImage();
-		IPointGenerator pointGenerator = new RandomPointGenerator(original.getWidth(), original.getHeight());
-		filter = new ObservableTrianglePictureFilter(pointGenerator);
+		filter = app.getFilter();
+		filter.setPointGenerator(new RandomPointGenerator(original.getWidth(), original.getHeight()));
 		filter.addObserver(observer);
 
-		setTitle(app.getFilename() + " (" + app.getNumberOfIterations() + " iterations, " + app.getNumberOfSamples() + " samples)");
+		setTitle(new StringBuilder(app.getFilename()).append(" (").append(app.getNumberOfIterations()).append(" iterations, ")
+				.append(app.getNumberOfSamples()).append(" samples)").toString());
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
@@ -104,12 +120,13 @@ public class RunWindow extends JDialog {
 		addControlPane();
 
 		addPreview();
+		addSnapshotPane();
 		processor.execute();
 		pack();
 	}
 
 	/**
-	 * Creates the panel at the top of the window containing the controls.
+	 * Creates the panel at the top of the window containing all the controls.
 	 */
 	private void addControlPane() {
 		controls.setLayout(new BorderLayout());
@@ -126,7 +143,17 @@ public class RunWindow extends JDialog {
 	}
 
 	/**
-	 * Creates a checkbox that allows the user to disable continuous updates.
+	 * Creates the panel at the top of the window containing all the controls.
+	 */
+	private void addSnapshotPane() {
+		snapControl.setLayout(new BoxLayout(snapControl, BoxLayout.X_AXIS));
+
+		addSnapshotSlider();
+		add(snapControl, BorderLayout.SOUTH);
+	}
+
+	/**
+	 * Creates a checkbox that allows the user disable continuous updates.
 	 */
 	private void addUpdateCheckbox() {
 		JCheckBox checkbox = new JCheckBox("Continuous Updates");
@@ -140,11 +167,42 @@ public class RunWindow extends JDialog {
 					preview.setVisible(true);
 				} else {
 					filter.removeObserver(observer);
+					if (!processor.isDone()) {
+						preview.setVisible(false);
+					}
 				}
 			}
 		});
 
 		upperControls.add(checkbox);
+	}
+
+	/**
+	 * Creates a slider that allows the user to select a specific snapshot.
+	 */
+	private void addSnapshotSlider() {
+		JLabel label = new JLabel("Snapshot(" + app.getNumberOfIterations() + ")");
+		slider.setMinimum(1);
+		slider.setMaximum(app.getNumberOfIterations());
+		slider.setValue(app.getNumberOfIterations());
+		slider.setMajorTickSpacing(app.getNumberOfIterations());
+		slider.setPaintLabels(true);
+		slider.setPaintTicks(true);
+		slider.setEnabled(false);
+
+		slider.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent event) {
+				if (!slider.getValueIsAdjusting()) {
+					label.setText("Snapshot(" + slider.getValue() + ")");
+					output = filter.getSnapshot(mementos.get(slider.getValue() - 1));
+					preview.setIcon(new ImageIcon(output));
+				}
+			}
+		});
+
+		snapControl.add(slider);
+		snapControl.add(label);
 	}
 
 	/**
@@ -184,13 +242,20 @@ public class RunWindow extends JDialog {
 	}
 
 	/**
-	 * Creates the preview area
+	 * Creates the preview area and starts generation of the image.
 	 */
 	private void addPreview() {
 		BufferedImage original = app.getOriginalImage();
 		preview.setPreferredSize(new Dimension(original.getWidth(), original.getHeight()));
 		add(preview, BorderLayout.CENTER);
 
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				if (!processor.isDone()) {
+					processor.cancel(true);
+				}
+			}
+		});
 	}
-
 }

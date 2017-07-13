@@ -6,7 +6,7 @@
 		<artifactId>iMage</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>1854693</artifactId>
+	<artifactId>jmjrst.main</artifactId>
 
 	<dependencies>
 		<dependency>
@@ -26,23 +26,14 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
-				<skipTest>${skipTests}</skipTest>
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<mainClass>org.jis.Main</mainClass>
-							<addDefaultImplementationEntries>
-								true
-							</addDefaultImplementationEntries>
-							<addDefaultSpecificationEntries>
-								true
-							</addDefaultSpecificationEntries>
-
 						</manifest>
 					</archive>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-	<groupId>swt1.ub5.a2</groupId>
 </project>

@@ -4,6 +4,10 @@ import java.awt.EventQueue;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.ServiceLoader;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -11,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.iMage.geometrify.AbstractPrimitivePictureFilter;
+import org.iMage.geometrify.PictureFilter;
 
 /**
  * This application provides a GUI for the Geometrify image filter.
@@ -25,15 +29,14 @@ public final class GeometrifyGUI {
 
 	public static final int PREVIEW_ITERATIONS = 100;
 	public static final int PREVIEW_SAMPLES = 30;
-
-	private AbstractPrimitivePictureFilter abstractFilter;
 	private int numberOfIterations = 100;
 	private int numberOfSamples = 30;
+	private PictureFilter filter;
 	private BufferedImage original;
 	private String filename = "walter.png";
 
+	private Vector<PictureFilter> filters;
 	private JFrame window;
-	
 
 	/*
 	 * Private constructor: App is not to be instantiated from outside
@@ -48,12 +51,6 @@ public final class GeometrifyGUI {
 	 *            command line arguments
 	 */
 	public static void main(String[] args) {
-		
-		ChooseFilterList go = new ChooseFilterList();
-		go.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		go.setSize(300,200);
-		go.setVisible(true);
-		
 		// Find the system look and feel if present
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -65,13 +62,13 @@ public final class GeometrifyGUI {
 			}
 		}
 
-		
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				GeometrifyGUI app = new GeometrifyGUI();
 				app.loadDefaultImage();
-				
+				app.loadFilters();
+
 				MainWindow window = new MainWindow(app);
 				window.setDefaultCloseOperation(MainWindow.EXIT_ON_CLOSE);
 				window.setVisible(true);
@@ -86,6 +83,26 @@ public final class GeometrifyGUI {
 			original = ImageIO.read(getClass().getResourceAsStream(filename));
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void loadFilters() {
+		filters = new Vector<>();
+		for (PictureFilter filter : ServiceLoader.load(PictureFilter.class)) {
+			filters.add(filter);
+		}
+
+		Collections.sort(filters, new Comparator<PictureFilter>() {
+			@Override
+			public int compare(PictureFilter f1, PictureFilter f2) {
+				return f1.getClass().getSimpleName().compareTo(f2.getClass().getSimpleName());
+			}
+		});
+
+		if (filters.isEmpty()) {
+			throw new IllegalStateException("No filters available!");
+		} else {
+			filter = filters.get(0);
 		}
 	}
 
@@ -137,8 +154,7 @@ public final class GeometrifyGUI {
 	}
 
 	/**
-	 * Sets the image to be filtered and resizes it if it exceeds the limits.
-	 * 
+	 * Sets the image to be filtered.
 	 * 
 	 * @param file
 	 *            the image file to set
@@ -168,5 +184,34 @@ public final class GeometrifyGUI {
 	 */
 	public String getFilename() {
 		return filename;
+	}
+
+	/**
+	 * Gets the currently set filter.
+	 * 
+	 * @return the picture filter
+	 */
+	public PictureFilter getFilter() {
+		return filter;
+	}
+
+	/**
+	 * Sets the filter to the selected value.
+	 * 
+	 * @param filter
+	 *            the filter to set
+	 */
+	public void setFilter(PictureFilter filter) {
+		this.filter = filter;
+	}
+
+	/**
+	 * Determines the available Geometrify filters.
+	 * 
+	 * @return a list of all available filters (sorted alphabetically by class
+	 *         name)
+	 */
+	public Vector<PictureFilter> getAvailableFilters() {
+		return filters;
 	}
 }

@@ -5,7 +5,7 @@
     <artifactId>iMage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>1854693</artifactId>
+  <artifactId>iMage.geometrify</artifactId>
   <dependencies>
   	<dependency>
   		<groupId>swt1</groupId>
@@ -15,7 +15,12 @@
   	<dependency>
   		<groupId>junit</groupId>
   		<artifactId>junit</artifactId>
+  		<scope>test</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.kohsuke.metainf-services</groupId>
+  		<artifactId>metainf-services</artifactId>
   	</dependency>
   </dependencies>
-  <groupId>swt1.ub5.a4</groupId>
+  <groupId>swt1.ub6.a3</groupId>
 </project>

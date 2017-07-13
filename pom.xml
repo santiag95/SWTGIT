@@ -26,5 +26,6 @@
     <module>iMage.geometrify</module>
     <module>iMage.geometrify-cli</module>
     <module>iMage.geometrify-gui</module>
-	</modules>
+    <module>iMage.geometrify-parallel</module>
+  </modules>
 </project>

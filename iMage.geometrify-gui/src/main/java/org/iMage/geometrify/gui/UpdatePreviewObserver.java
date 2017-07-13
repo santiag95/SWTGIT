@@ -9,6 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.iMage.geometrify.PictureFilterObserver;
+
 /**
  * A {@link PictureFilterObserver} which updates the preview {@link JPanel}
  * 

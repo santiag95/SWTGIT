@@ -1,44 +1,33 @@
 package org.iMage.geometrify;
 
-import java.awt.Point;
+import org.kohsuke.MetaInfServices;
 
 /**
- * The {@link EllipsePictureFilter} is a {@link IPrimitiveFilter} which is able
- * to reconstruct an image through {@link Ellipse}s.
- * @author santiagotafur
- *@version 1.0
+ * The "Geometrify" filter for ellipses.
+ * 
+ * @author Dominic Ziegler
+ * @version 1.0
  */
-public class EllipsePictureFilter extends GeneralPictureFilter {
-
+@MetaInfServices(PictureFilter.class)
+public class EllipsePictureFilter extends PictureFilter {
 	/**
-	 * Constructs a {@link EllipsePictureFilter} with an specified
-	 * {@link IPointGenerator}.
-	 *
+	 * Creates a new picture filter for ellipses.
+	 * 
 	 * @param pointGenerator
-	 *            The {@link IPointGenerator} to use for generating
-	 *            {@link Ellipse} {@link Point}s
+	 *            the source to be used for generating points
 	 */
 	public EllipsePictureFilter(IPointGenerator pointGenerator) {
 		super(pointGenerator);
 	}
-	
-	
 
-
-	/* (non-Javadoc)
-	 * @see org.iMage.geometrify.GeneralPictureFilter#generatePrimitive()
+	/**
+	 * Creates a new picture filter for ellipses.
 	 */
-	@Override
-	protected IPrimitive generatePrimitive() {
-		// TODO Auto-generated method stub
-		Point centerPoint = pointGenerator.nextPoint();
-		Point pointToWidthRadius = pointGenerator.nextPoint();
-		Point pointToHeightRadius = pointGenerator.nextPoint();
-		int width = calculateDistance(centerPoint, pointToWidthRadius) * 2;
-		int height = calculateDistance(centerPoint, pointToHeightRadius) * 2;
-		
-		return new Ellipse(centerPoint, width, height);
+	public EllipsePictureFilter() {
 	}
 	
-
+	@Override
+	protected IPrimitive generatePrimitive() {
+		return new Ellipse(pointGenerator.nextPoint(), pointGenerator.nextPoint());
+	}
 }

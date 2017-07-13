@@ -1,36 +1,33 @@
 package org.iMage.geometrify;
 
-import java.awt.Point;
+import org.kohsuke.MetaInfServices;
 
 /**
- * The {@link RectanglePictureFilter} is a {@link IPrimitiveFilter} which is able
- * to reconstruct an image through {@link Rectangle}s.
- * @author santiagotafur
- *@version 1.0
+ * The "Geometrify" filter for rectangles.
+ * 
+ * @author Tobias Hey
+ * @version 1.0
  */
-public class RectanglePictureFilter extends GeneralPictureFilter {
-
-	
+@MetaInfServices(PictureFilter.class)
+public class RectanglePictureFilter extends PictureFilter {
 	/**
-	 * Constructs a {@link RectanglePictureFilter} with an specified
-	 * {@link IPointGenerator}.
-	 *
+	 * Creates a new picture filter for rectangles.
+	 * 
 	 * @param pointGenerator
-	 *            The {@link IPointGenerator} to use for generating
-	 *            {@link Rectangle} {@link Point}s
+	 *           the source to be used for generating points
 	 */
 	public RectanglePictureFilter(IPointGenerator pointGenerator) {
 		super(pointGenerator);
 	}
 	
-
-	/* (non-Javadoc)
-	 * @see org.iMage.geometrify.GeneralPictureFilter#generatePrimitive()
+	/**
+	 * Creates a new picture filter for rectangles.
 	 */
-	@Override
-	protected IPrimitive generatePrimitive() {
-		// TODO Auto-generated method stub
-		return new Rectangle(pointGenerator.nextPoint(), pointGenerator.nextPoint());
+	public RectanglePictureFilter() {
 	}
 
+	@Override
+	protected IPrimitive generatePrimitive() {
+		return new Rectangle(pointGenerator.nextPoint(), pointGenerator.nextPoint());
+	}
 }

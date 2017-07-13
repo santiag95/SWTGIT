@@ -1,5 +1,6 @@
 package org.iMage.geometrify.gui;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,18 +15,22 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.ListCellRenderer;
 import javax.swing.SwingWorker;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.iMage.geometrify.IPointGenerator;
 import org.iMage.geometrify.IPrimitiveFilter;
+import org.iMage.geometrify.PictureFilter;
 import org.iMage.geometrify.RandomPointGenerator;
 
 /**
@@ -39,6 +44,8 @@ public class MainWindow extends JFrame {
 
 	private static final String WINDOW_TITLE = "iLlustrate - Geometrify";
 	private static final Dimension PREVIEW_SIZE = new Dimension(150, 150);
+	private static final int PREVIEW_ITERATIONS = 100;
+	private static final int PREVIEW_SAMPLES = 30;
 	private static final int MAX_ITERATIONS = 2000;
 	private static final int MAX_SAMPLES = 200;
 
@@ -53,28 +60,19 @@ public class MainWindow extends JFrame {
 
 	private BufferedImage preview;
 
-	private PreviewGenerator currentTask;
-
 	/**
 	 * Background worker class responsible for generating the preview image.
 	 */
 	private class PreviewGenerator extends SwingWorker<BufferedImage, Object> {
 		IPrimitiveFilter filter;
 
-		/**
-		 * Constructs a new {@link PreviewGenerator} with the specified
-		 * {@link IPrimitiveFilter}
-		 * 
-		 * @param filter
-		 *            the {@link IPrimitiveFilter} to use
-		 */
 		public PreviewGenerator(IPrimitiveFilter filter) {
 			this.filter = filter;
 		}
 
 		@Override
 		protected BufferedImage doInBackground() {
-			return filter.apply(preview, GeometrifyGUI.PREVIEW_ITERATIONS, GeometrifyGUI.PREVIEW_SAMPLES);
+			return filter.apply(preview, PREVIEW_ITERATIONS, PREVIEW_SAMPLES);
 		}
 
 		@Override
@@ -87,6 +85,8 @@ public class MainWindow extends JFrame {
 			}
 		}
 	}
+
+	private PreviewGenerator currentTask;
 
 	/**
 	 * Creates a new main window.
@@ -127,10 +127,49 @@ public class MainWindow extends JFrame {
 	private void addConfigPane() {
 		config.setLayout(new GridBagLayout());
 
+		addShapeSelector();
 		addIterationsSlider();
 		addSamplesSlider();
 
 		add(config);
+	}
+
+	/**
+	 * Creates a combo box to select the filter to be applied.
+	 */
+	private void addShapeSelector() {
+		JComboBox<PictureFilter> box = new JComboBox<>(app.getAvailableFilters());
+		box.setRenderer(new ListCellRenderer<PictureFilter>() {
+			@Override
+			public Component getListCellRendererComponent(JList<? extends PictureFilter> list, PictureFilter filter, int index,
+					boolean isSelected, boolean cellHasFocus) {
+				JLabel label = new JLabel(filter.getClass().getSimpleName());
+				label.setOpaque(true);
+
+				if (isSelected) {
+					label.setForeground(UIManager.getColor("List.selectionForeground"));
+					label.setBackground(UIManager.getColor("List.selectionBackground"));
+				} else {
+					label.setForeground(UIManager.getColor("List.foreground"));
+					label.setBackground(UIManager.getColor("List.background"));
+				}
+
+				return label;
+			}
+		});
+
+		box.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				app.setFilter(box.getItemAt(box.getSelectedIndex()));
+				updatePreview();
+			}
+		});
+
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.gridwidth = 2;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		config.add(box, constraints);
 	}
 
 	/**
@@ -163,7 +202,6 @@ public class MainWindow extends JFrame {
 		constraints.gridx = 1;
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		config.add(slider, constraints);
-
 	}
 
 	/**
@@ -273,8 +311,8 @@ public class MainWindow extends JFrame {
 	private void updatePreview() {
 		previewProcessed.setVisible(false);
 
-		IPointGenerator generator = new RandomPointGenerator(preview.getWidth(), preview.getHeight());
-		IPrimitiveFilter filter = new ObservableTrianglePictureFilter(generator);
+		IPrimitiveFilter filter = app.getFilter();
+		filter.setPointGenerator(new RandomPointGenerator(preview.getWidth(), preview.getHeight()));
 
 		// Abort the old task if still running before starting a new one
 		if (currentTask != null && !currentTask.isDone()) {

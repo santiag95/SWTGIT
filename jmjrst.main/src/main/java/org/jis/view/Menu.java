@@ -18,14 +18,13 @@ package org.jis.view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
-import java.util.List;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.UIManager;
-import java.util.Iterator;
 
 import org.iMage.plugins.JmjrstPlugin;
 import org.iMage.plugins.PluginManager;
@@ -181,10 +180,11 @@ public class Menu extends JMenuBar {
 		// SWT1 plug-in Menu
 		JMenu swt1Plugins = new JMenu("Load plug-in");
 
-		Iterator<JmjrstPlugin> plugins = PluginManager.getPlugins().iterator();
+		Iterator<JmjrstPlugin> iter = PluginManager.getPlugins().iterator();
 
-		while (plugins.hasNext()) {
-			final JmjrstPlugin plugin = plugins.next();
+		// Load plug-ins
+		while (iter.hasNext()) {
+			JmjrstPlugin plugin = iter.next();
 			plugin.init(m);
 
 			// add menu item for plug-in
@@ -196,6 +196,7 @@ public class Menu extends JMenuBar {
 				JMenuItem cmi = createConfigMenuItem(plugin);
 				swt1Plugins.add(cmi);
 			}
+
 		}
 		// display error message
 		if (swt1Plugins.getMenuComponentCount() == 0) {
