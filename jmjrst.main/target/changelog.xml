@@ -1,4 +1,10 @@
 <changelog><commit>
+					<time>1499930556</time>
+					<sha1>6096c4471b613aee87fb1a45156c625adb715272</sha1>
+					<author>santiag95</author>
+					<branches>refs/heads/master</branches>
+					<msg>Replaced old version for the templates</msg>
+				</commit><commit>
 					<time>1499241114</time>
 					<sha1>0920e5514e4730532cd1be512d52e529c3e14d2f</sha1>
 					<author>santiag95</author>
