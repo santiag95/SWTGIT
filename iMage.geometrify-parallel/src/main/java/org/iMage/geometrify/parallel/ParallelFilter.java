@@ -14,7 +14,7 @@ import org.iMage.geometrify.IPointGenerator;
 import org.iMage.geometrify.IPrimitive;
 import org.iMage.geometrify.PictureFilter;
 import org.iMage.geometrify.PictureFilterObserver;
-import org.iMage.geometrify.PictureFilter.Memento;
+
 
 
 public abstract class ParallelFilter extends PictureFilter {
@@ -358,14 +358,14 @@ public abstract class ParallelFilter extends PictureFilter {
 		final List<Future<IPrimitiveContainer>> futures = new ArrayList<>();
 		int i = 0;
 		 
-		parallelSearch(actual.getValue(), to.getValue(), image, result);
+		
 		while (i < numberOfCores ) {
 			
 			Future<IPrimitiveContainer> future = executor.submit( () -> parallelSearch(actual.getValue(), to.getValue(), image, result));
 			actual.add(part);
 			futures.add(future);
 			
-			if (to.getValue() + 2*part > samples) {
+			if (to.getValue() + 2*part >= samples && i == numberOfCores - 2) {
 				to.setValue(samples);
 			}
 			else {
@@ -378,13 +378,12 @@ public abstract class ParallelFilter extends PictureFilter {
 		
 		for(Future<IPrimitiveContainer> f : futures) {
 			try {
-				if(f.isDone()) {
 			       IPrimitiveContainer xx = f.get();
-			       if (xx.getDistance() < bestContainer.getDistance()) {
+			       if (xx.getDistance() <= bestContainer.getDistance()) {
 			    	   bestContainer.setValue(xx.getPrimitive());
 			    	   bestContainer.setDistance(xx.getDistance());
 			       }
-				} 
+			       
 			     } catch(Exception e) {
 			       
 			     }
