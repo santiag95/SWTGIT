@@ -33,7 +33,7 @@ public class ParallelTest {
 		BufferedImage img = null;
 		try 
 		{
-		    img = ImageIO.read(new File("/Users/santiagotafur/Desktop/dices_alpha.png")); 
+		    img = ImageIO.read(new File("GrussAusItalien.png")); 
 		    
 		} 
 		catch (IOException e) 
@@ -54,12 +54,12 @@ public class ParallelTest {
 		long duration2 = (endTime2 - startTime2);
 	   
 		long startTime1 = System.nanoTime();
-		imParallel = pf.apply(img, 100, 50);
+		imParallel = pf.apply(img, 100, 40);
 		long endTime1 = System.nanoTime();
 		long duration1 = (endTime1 - startTime1);
 		
-		File outputfile = new File("/Users/santiagotafur/Desktop/parallelDices.png");
-	    File outputfile2 = new File("/Users/santiagotafur/Desktop/normalDices.png");
+		File outputfile = new File("ParallelGrussAusItalien.png");
+	    File outputfile2 = new File("SequentialGrussAusItalien.png");
 	    
 	    try {
 			ImageIO.write(imParallel, "png", outputfile);
