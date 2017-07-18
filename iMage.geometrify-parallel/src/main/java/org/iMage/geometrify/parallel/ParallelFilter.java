@@ -21,7 +21,7 @@ public abstract class ParallelFilter extends PictureFilter {
 
 	private static final int HEX_FF = 0xFF;
 
-	private int numberOfCores;
+	private int numberOfThreads;
 	private List<PictureFilterObserver> observers = new LinkedList<>();
 	private List<Memento> mementos;
 	
@@ -29,33 +29,35 @@ public abstract class ParallelFilter extends PictureFilter {
     
 	
 	public ParallelFilter() {
-		this.numberOfCores = Runtime.getRuntime().availableProcessors();
-		executor = Executors.newFixedThreadPool(numberOfCores);
+		
+		this.numberOfThreads =Runtime.getRuntime().availableProcessors(); 
+		executor = Executors.newFixedThreadPool(numberOfThreads);
 		mementos = new ArrayList<>();
 	}
 	
     public ParallelFilter(IPointGenerator pointGenerator, int x) {
     	super(pointGenerator);
     	if(x != 0){
-    		this.numberOfCores = x;
+    		this.numberOfThreads = x;
     	}
     	else {
     		System.out.println("Imposible to calculate with 0 threads. "
     				+ "Threads quantity will be calculated automatically");
+    		this.numberOfThreads = Runtime.getRuntime().availableProcessors();
     	}
-		executor = Executors.newFixedThreadPool(numberOfCores);
-		mementos = new ArrayList<>();
+		executor = Executors.newFixedThreadPool(numberOfThreads);
+		
 	}
     
     public ParallelFilter(IPointGenerator pointGenerator) {
     	super(pointGenerator);
-		this.numberOfCores = Runtime.getRuntime().availableProcessors();
-		executor = Executors.newFixedThreadPool(numberOfCores);
+    	this.numberOfThreads = Runtime.getRuntime().availableProcessors();
+		executor = Executors.newFixedThreadPool(numberOfThreads);
 		mementos = new ArrayList<>();
 	}
     
 	public int getNumberOfCore() {
-		return numberOfCores;
+		return numberOfThreads;
 	}
 	
 
@@ -357,20 +359,20 @@ public abstract class ParallelFilter extends PictureFilter {
 	 */
 	public IPrimitive beginThreads(int samples, BufferedImage image, BufferedImage result) {
 		int part = 0;
-		int cores = 0;
-		double modulo = samples%numberOfCores;
-		double half = numberOfCores/2;
-		if (samples < numberOfCores) {
+		int threads = 0;
+		double modulo = samples%numberOfThreads;
+		double half = numberOfThreads/2;
+		if (samples < numberOfThreads) {
 			part = 1;
-			cores = samples;
+			threads = samples;
 		}
 		else {
 			
-			part = samples / numberOfCores;
-			if(part == 1 && samples != numberOfCores && modulo > half) {
+			part = samples / numberOfThreads;
+			if(part == 1 && samples != numberOfThreads && modulo > half) {
 				part = 2;
 			}
-			cores = numberOfCores;
+			threads = numberOfThreads;
 		}
 		IntContainer actual = new IntContainer(0);
 		IntContainer to = new IntContainer(part);
@@ -379,7 +381,7 @@ public abstract class ParallelFilter extends PictureFilter {
 		int i = 0;
 		 
 		
-		while (i < cores) {
+		while (i < threads) {
 			final int from = actual.getValue();
 			final int until = to.getValue();
 			Future<IPrimitiveContainer> future = executor.submit(() -> 
@@ -389,7 +391,7 @@ public abstract class ParallelFilter extends PictureFilter {
 			
 			
 			actual.add(part);
-			if (to.getValue() + 2 * part >= samples && i == cores - 2) {
+			if (to.getValue() + 2 * part >= samples && i == threads - 2) {
 				to.setValue(samples);
 			} else {
 				to.add(part);
@@ -422,7 +424,7 @@ public abstract class ParallelFilter extends PictureFilter {
 	 * @param result image 
 	 * @return bestPrimitive the best Sample candidate
 	 */
-	public synchronized IPrimitiveContainer parallelSearch(int first, int last, BufferedImage image, BufferedImage result) {
+	public  IPrimitiveContainer parallelSearch(int first, int last, BufferedImage image, BufferedImage result) {
 		IPrimitiveContainer bestPrimitive = new IPrimitiveContainer(null);
 		
 		for (int s = first; s < last; s++) {

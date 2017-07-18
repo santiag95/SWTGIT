@@ -45,18 +45,18 @@ public class ParallelTest {
 		
 		NonRandomPointGenerator nrpgPara = new NonRandomPointGenerator(img.getWidth(), img.getHeight());
 	    NonRandomPointGenerator nrpgNormal = new NonRandomPointGenerator(img.getWidth(), img.getHeight());
-	    ParallelTrianglePictureFilter pf = new ParallelTrianglePictureFilter(nrpgPara,2);
+	    ParallelTrianglePictureFilter pf = new ParallelTrianglePictureFilter(nrpgPara);
 	    TrianglePictureFilter nf = new TrianglePictureFilter(nrpgNormal);
 
 	    
 		
 	    long startTime1 = System.nanoTime();
-		imParallel = pf.apply(img, 100, 30);
+		imParallel = pf.apply(img, 40, 40);
 		long endTime1 = System.nanoTime();
 		long duration1 = (endTime1 - startTime1);
 		
 		long startTime2 = System.nanoTime();
-		imSequence = nf.apply(img, 100, 30);
+		imSequence = nf.apply(img, 40, 40);
 		long endTime2 = System.nanoTime();
 		long duration2 = (endTime2 - startTime2);
 		
@@ -84,7 +84,7 @@ public class ParallelTest {
 	 *   every Primitive they generate are the same.
 	 */
 	
-	
+
 	@Test
 	public void testEquality() {
 		BufferedImage image = null;
