@@ -16,6 +16,7 @@ import org.iMage.geometrify.IPrimitive;
 import org.iMage.geometrify.NonRandomPointGenerator;
 import org.iMage.geometrify.Triangle;
 import org.iMage.geometrify.TrianglePictureFilter;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ParallelTest {
@@ -26,14 +27,15 @@ public class ParallelTest {
 	/**
 	 * Tests if the duration of the Parallel Implementation 
 	 *   is lower than the Sequential
+	 * @throws Exception 
 	 */
+	
 	@Test
-	public void testTime() 
-	{
+	public void testTime() {
 		BufferedImage img = null;
 		try 
 		{
-		    img = ImageIO.read(new File("GrussAusItalien.png")); 
+		    img = ImageIO.read(new File("src/test/resources/GrussAusItalien.png")); 
 		    
 		} 
 		catch (IOException e) 
@@ -43,23 +45,27 @@ public class ParallelTest {
 		
 		NonRandomPointGenerator nrpgPara = new NonRandomPointGenerator(img.getWidth(), img.getHeight());
 	    NonRandomPointGenerator nrpgNormal = new NonRandomPointGenerator(img.getWidth(), img.getHeight());
-	    ParallelTrianglePictureFilter pf = new ParallelTrianglePictureFilter(nrpgPara);
+	    ParallelTrianglePictureFilter pf = new ParallelTrianglePictureFilter(nrpgPara,2);
 	    TrianglePictureFilter nf = new TrianglePictureFilter(nrpgNormal);
-	    
+
 	    
 		
-		long startTime2 = System.nanoTime();
-		imSequence = nf.apply(img, 100, 50);
-		long endTime2 = System.nanoTime();
-		long duration2 = (endTime2 - startTime2);
-	   
-		long startTime1 = System.nanoTime();
-		imParallel = pf.apply(img, 100, 40);
+	    long startTime1 = System.nanoTime();
+		imParallel = pf.apply(img, 100, 30);
 		long endTime1 = System.nanoTime();
 		long duration1 = (endTime1 - startTime1);
 		
-		File outputfile = new File("ParallelGrussAusItalien.png");
-	    File outputfile2 = new File("SequentialGrussAusItalien.png");
+		long startTime2 = System.nanoTime();
+		imSequence = nf.apply(img, 100, 30);
+		long endTime2 = System.nanoTime();
+		long duration2 = (endTime2 - startTime2);
+		
+
+
+		
+		
+		File outputfile = new File("src/test/resources/parallel.png");
+	    File outputfile2 = new File("src/test/resources/sequential.png");
 	    
 	    try {
 			ImageIO.write(imParallel, "png", outputfile);
@@ -77,12 +83,14 @@ public class ParallelTest {
 	 * Test through a Simulation of both implementations if 
 	 *   every Primitive they generate are the same.
 	 */
+	
+	
 	@Test
 	public void testEquality() {
 		BufferedImage image = null;
 		try 
 		{
-		    image = ImageIO.read(new File("/Users/santiagotafur/Desktop/dices_alpha.png")); 
+		    image = ImageIO.read(new File("src/test/resources/GrussAusItalien.png")); 
 		    
 		} 
 		catch (IOException e) 
@@ -92,8 +100,8 @@ public class ParallelTest {
 		
 		
 		boolean equal = true;
-		List<IPrimitive> bestParallel = simulationParallelTriangle(image, 20, 4);
-		List<IPrimitive> bestSequential = simulationSequentialTriangle(image, 20, 4);
+		List<IPrimitive> bestParallel = simulationParallelTriangle(image, 40, 30);
+		List<IPrimitive> bestSequential = simulationSequentialTriangle(image, 40, 30);
 		
 		if (bestParallel.size() == bestSequential.size()) {
 			for (int i = 0; i < bestSequential.size(); i++) {
@@ -111,10 +119,13 @@ public class ParallelTest {
 				boolean upperLeftBound = aULPara.equals(aULSeq);
 				boolean color = parallelPrimitive.getColor().equals(sequentialPrimitive.getColor());
 				
+					
+				
+				
 				if(!(lowerRightPoint && upperLeftBound && color)) {
 					equal = false;
 					break;
-				}
+				}	
 			}
 		}
 		else {

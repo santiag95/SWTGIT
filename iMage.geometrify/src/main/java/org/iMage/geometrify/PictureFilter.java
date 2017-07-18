@@ -226,6 +226,7 @@ public abstract class PictureFilter extends AbstractPrimitivePictureFilter {
 				}
 			}
 
+			
 			addToImage(result, bestPrimitive);
 
 			Memento memento = new Memento(bestPrimitive, width, height, image.getType(), previousMemento);

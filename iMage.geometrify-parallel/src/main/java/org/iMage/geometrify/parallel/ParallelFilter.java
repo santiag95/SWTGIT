@@ -25,8 +25,8 @@ public abstract class ParallelFilter extends PictureFilter {
 	private List<PictureFilterObserver> observers = new LinkedList<>();
 	private List<Memento> mementos;
 	
-	final ExecutorService executor;
-    final List<Future<?>> futures = new ArrayList<>();
+	private final ExecutorService executor;
+    
 	
 	public ParallelFilter() {
 		this.numberOfCores = Runtime.getRuntime().availableProcessors();
@@ -36,10 +36,17 @@ public abstract class ParallelFilter extends PictureFilter {
 	
     public ParallelFilter(IPointGenerator pointGenerator, int x) {
     	super(pointGenerator);
-		this.numberOfCores = x;
+    	if(x != 0){
+    		this.numberOfCores = x;
+    	}
+    	else {
+    		System.out.println("Imposible to calculate with 0 threads. "
+    				+ "Threads quantity will be calculated automatically");
+    	}
 		executor = Executors.newFixedThreadPool(numberOfCores);
 		mementos = new ArrayList<>();
 	}
+    
     public ParallelFilter(IPointGenerator pointGenerator) {
     	super(pointGenerator);
 		this.numberOfCores = Runtime.getRuntime().availableProcessors();
@@ -47,12 +54,6 @@ public abstract class ParallelFilter extends PictureFilter {
 		mementos = new ArrayList<>();
 	}
     
-    public ParallelFilter(int x) {
-		this.numberOfCores = x;
-		executor = Executors.newFixedThreadPool(numberOfCores);
-		mementos = new ArrayList<>();
-	}
-	
 	public int getNumberOfCore() {
 		return numberOfCores;
 	}
@@ -251,7 +252,8 @@ public abstract class ParallelFilter extends PictureFilter {
 				if (primitive.isInsidePrimitive(currPixel)) {
 					for (int n = 0; n < bandwidth; n++) {
 						difference += Math.abs(orgPixels[pixelIndex + n]
-								- ((currPixels[pixelIndex + n] + ((primitive.getColor().getRGB() >> n * 8) & HEX_FF)) / 2));
+								- ((currPixels[pixelIndex + n] + 
+										((primitive.getColor().getRGB() >> n * 8) & HEX_FF)) / 2));
 					}
 				} else {
 					for (int n = 0; n < bandwidth; n++) {
@@ -304,7 +306,8 @@ public abstract class ParallelFilter extends PictureFilter {
 
 					for (int n = 0; n < bandwidth; n++) {
 						imgPixels[pixelIndex + n] = Math.max(0,
-								Math.min(255, (((primitive.getColor().getRGB() >> n * 8) & HEX_FF) + imgPixels[pixelIndex + n]) / 2));
+								Math.min(255, (((primitive.getColor().getRGB() >> n * 8) & HEX_FF) 
+										+ imgPixels[pixelIndex + n]) / 2));
 					}
 				}
 			}
@@ -329,17 +332,12 @@ public abstract class ParallelFilter extends PictureFilter {
 		// construct "empty" image
 		BufferedImage result = new BufferedImage(width, height, image.getType());
 
-		Memento previousMemento = null;
-
 		for (int i = 0; i < numberOfIterations; i++) {
 			IPrimitive bestPrimitive = null;
+			
 			bestPrimitive = beginThreads(numberOfSamples, image, result);
-
 			addToImage(result, bestPrimitive);
 
-			Memento memento = new Memento(bestPrimitive, width, height, image.getType(), previousMemento);
-			mementos.add(memento);
-			previousMemento = memento;
 
 			iterationCompleted(result);
 			if (Thread.currentThread().isInterrupted()) {
@@ -350,8 +348,30 @@ public abstract class ParallelFilter extends PictureFilter {
 		return result;
 	}
 	
+	/**
+	 * Divides the quantity of threads in different parallel searches.
+	 * @param samples number of samples
+	 * @param image image to filter
+	 * @param result the result image
+	 * @return the best Primitive
+	 */
 	public IPrimitive beginThreads(int samples, BufferedImage image, BufferedImage result) {
-		int part = samples/numberOfCores;
+		int part = 0;
+		int cores = 0;
+		double modulo = samples%numberOfCores;
+		double half = numberOfCores/2;
+		if (samples < numberOfCores) {
+			part = 1;
+			cores = samples;
+		}
+		else {
+			
+			part = samples / numberOfCores;
+			if(part == 1 && samples != numberOfCores && modulo > half) {
+				part = 2;
+			}
+			cores = numberOfCores;
+		}
 		IntContainer actual = new IntContainer(0);
 		IntContainer to = new IntContainer(part);
 		IPrimitiveContainer bestContainer = new IPrimitiveContainer(null);
@@ -359,16 +379,19 @@ public abstract class ParallelFilter extends PictureFilter {
 		int i = 0;
 		 
 		
-		while (i < numberOfCores ) {
+		while (i < cores) {
+			final int from = actual.getValue();
+			final int until = to.getValue();
+			Future<IPrimitiveContainer> future = executor.submit(() -> 
+					parallelSearch(from, until, image, result));
 			
-			Future<IPrimitiveContainer> future = executor.submit( () -> parallelSearch(actual.getValue(), to.getValue(), image, result));
-			actual.add(part);
 			futures.add(future);
 			
-			if (to.getValue() + 2*part >= samples && i == numberOfCores - 2) {
+			
+			actual.add(part);
+			if (to.getValue() + 2 * part >= samples && i == cores - 2) {
 				to.setValue(samples);
-			}
-			else {
+			} else {
 				to.add(part);
 			}
 			
@@ -376,7 +399,7 @@ public abstract class ParallelFilter extends PictureFilter {
 		}
 		
 		
-		for(Future<IPrimitiveContainer> f : futures) {
+		for (Future<IPrimitiveContainer> f : futures) {
 			try {
 			       IPrimitiveContainer xx = f.get();
 			       if (xx.getDistance() <= bestContainer.getDistance()) {
@@ -384,14 +407,22 @@ public abstract class ParallelFilter extends PictureFilter {
 			    	   bestContainer.setDistance(xx.getDistance());
 			       }
 			       
-			     } catch(Exception e) {
-			       
+			     } catch (Exception e) {
+			       //ignore
 			     }
 		}
 		return bestContainer.getPrimitive();
 	}
 	
-	public IPrimitiveContainer parallelSearch(int first, int last, BufferedImage image, BufferedImage result ) {
+	/**
+	 * Searches a sample from a determined number to another.
+	 * @param first number
+	 * @param last number
+	 * @param image to be filter
+	 * @param result image 
+	 * @return bestPrimitive the best Sample candidate
+	 */
+	public synchronized IPrimitiveContainer parallelSearch(int first, int last, BufferedImage image, BufferedImage result) {
 		IPrimitiveContainer bestPrimitive = new IPrimitiveContainer(null);
 		
 		for (int s = first; s < last; s++) {
@@ -412,9 +443,4 @@ public abstract class ParallelFilter extends PictureFilter {
 		return bestPrimitive;
 		
 	}
-	
-	
-
-
-
 }
